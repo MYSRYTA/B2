@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="h">
+      <UniqueIdentifier>{31a2d201-f274-44e1-be29-52ce3801e4e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="inl">
+      <UniqueIdentifier>{8068d9be-6bba-477e-a311-19f84277f629}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\CameraController.h">
+      <Filter>h</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\HandShake.h">
+      <Filter>h</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\walkShake.h">
+      <Filter>h</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Source\CameraController.inl">
+      <Filter>inl</Filter>
+    </None>
+    <None Include="Source\HandShake.inl">
+      <Filter>inl</Filter>
+    </None>
+    <None Include="Source\walkShake.inl">
+      <Filter>inl</Filter>
+    </None>
+  </ItemGroup>
+</Project>
