@@ -179,7 +179,9 @@ def overwrite_animation_curve(source_anim_curve, target_anim_curve):
     # ソースアニメーションカーブのキー情報をターゲットアニメーションカーブに設定
     for time, value in zip(source_times, source_keys):
         cmds.setKeyframe(target_anim_curve, time=time, value=value)
-    
+        cmds.selectKey(target_anim_curve, k = True, t =(time,time))
+        cmds.keyframe(absolute=True, valueChange=value)
+        
     # ターゲットアニメーションカーブのサイクルタイプを設定
     cmds.setInfinity(target_anim_curve, pri=source_cycle_pri, poi=source_cycle_poi)
 
@@ -188,23 +190,23 @@ def overwrite_animation_curve(source_anim_curve, target_anim_curve):
 #-------------------------------------------------------------------------------------------
 
 # 階層の末端のオブジェクトを選択する
-selection_obj = test2.get_selection_list()
-tip_obj = test2.select_hierarchy_tip_nodes(selection_obj)
-
-# 選択されたオブジェクトの名前を取得
-node_names = test2.get_selection_list(False)
-
-# 
-pose_pack = test2.DagPoseDataPack("BaseAnimation")
-pose_pack.record_pose(node_names, 50)
-
-# ポーズデータを外部データに保存する
-bin_path = "C:/D/saveCustomData.bin"
-#test2.save_custom_data(bin_path, pose_pack)
-
-source_pose_pack = test2.load_custom_data(bin_path)
-print (source_pose_pack.pose_compare("ABC"))
-
-
-# オブジェクトの選択状態をスクリプト実行時に戻す
-test2.select_nodes(selection_obj)
+#selection_obj = test2.get_selection_list()
+#tip_obj = test2.select_hierarchy_tip_nodes(selection_obj)
+#
+## 選択されたオブジェクトの名前を取得
+#node_names = test2.get_selection_list(False)
+#
+## 
+#pose_pack = test2.DagPoseDataPack("BaseAnimation")
+#pose_pack.record_pose(node_names, 50)
+#
+## ポーズデータを外部データに保存する
+#bin_path = "C:/D/saveCustomData.bin"
+##test2.save_custom_data(bin_path, pose_pack)
+#
+#source_pose_pack = test2.load_custom_data(bin_path)
+#print (source_pose_pack.pose_compare("ABC"))
+#
+#
+## オブジェクトの選択状態をスクリプト実行時に戻す
+#test2.select_nodes(selection_obj)
