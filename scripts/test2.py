@@ -166,7 +166,7 @@ class DagPoseDataPack:
                     if data.l_rot[i] != to_list(rot_val) : return False
         return True
         
-def overwrite_animation_curve(source_anim_curve, target_anim_curve):
+def aa(source_anim_curve, target_anim_curve):
     # ソースアニメーションカーブのキー情報を取得
     source_keys = cmds.keyframe(source_anim_curve, q=True, vc=True)
     source_times = cmds.keyframe(source_anim_curve, q=True, tc=True)
@@ -184,6 +184,60 @@ def overwrite_animation_curve(source_anim_curve, target_anim_curve):
         
     # ターゲットアニメーションカーブのサイクルタイプを設定
     cmds.setInfinity(target_anim_curve, pri=source_cycle_pri, poi=source_cycle_poi)
+    
+def overwrite_animation_curve(source_anim_curve, target_anim_curve):
+    # アニメーションカーブキーを複製
+    cmds.copyKey(source_anim_curve)
+    cmds.cutKey(target_anim_curve, clear=True)
+    cmds.pasteKey(target_anim_curve)
+    
+    # ターゲットアニメーションカーブのインフィニティ―タイプを複製
+    pri_poi_type = cmds.setInfinity (source_anim_curve, pri=True, poi=True, q=True)
+    cmds.setInfinity(target_anim_curve, pri=pri_poi_type[0], poi=pri_poi_type[1])
+            
+def create_cycle_keyframes(anim_attr, pri_count, post_count):    
+    # アニメーションカーブのインフィニティ―情報を取得する
+    source_pri_poi = cmds.setInfinity (anim_attr, q=True, pri=True, poi=True)
+    if not "cycle" in source_pri_poi[0] and not "cycle" in source_pri_poi[1] : return
+    
+    # アニメーションカーブの情報を取得する
+    source_times = cmds.keyframe(anim_attr, q=True, tc=True)
+    source_keys = cmds.keyframe(anim_attr, q=True, vc=True)
+    time_range = source_times[-1] - source_times[0]
+    value_offset = source_keys[-1] - source_keys[0]
+
+    # スタート・エンドのキーのタンジェントを固定する
+    for i in range(2):
+        if not "cycle" in source_pri_poi[i] : continue
+        
+        time = source_times[0] if i == 0 else source_times[-1]
+        cmds.selectKey(anim_attr, k=True, t=(time,time))
+        td = cmds.keyTangent(anim_attr, t=(time,time), q=True, inAngle=True, inWeight=True, outAngle=True, outWeight=True)
+        cmds.keyTangent(anim_attr, e=True, t =(time,time), inAngle=td[0], inWeight=td[2], outAngle=td[1], outWeight=td[3])
+    
+    # アニメーションカーブをクリップボードにコピーする
+    cmds.copyKey(anim_attr) 
+    
+    cycle_count_pri_poi = [pri_count, post_count]
+    for i in range(2):
+        if not "cycle" in source_pri_poi[i] : continue
+
+        cycle_count = cycle_count_pri_poi[i]
+        pri_or_poi = -1 if i == 0 else 1
+        for cycle_i in range(1,cycle_count+1):
+            if source_pri_poi[i] == "cycleRelative":
+                # 「オフセット付きサイクル」タイプの場合
+                o_time = time_range * cycle_i * pri_or_poi
+                o_value = value_offset * cycle_i * pri_or_poi 
+                cmds.pasteKey(anim_attr, timeOffset=o_time, valueOffset=o_value, option="replace")
+            else:
+                # 「サイクル」タイプの場合
+                o_time = ( time_range * cycle_i + 0.01) * pri_or_poi          
+                cmds.pasteKey(anim_attr, timeOffset=o_time, option="replace")
+                for source_time in source_times:           
+                    new_time = source_time + o_time
+                    cmds.selectKey(anim_attr, k = True, t =(new_time,new_time))
+                    cmds.keyframe(absolute=True, timeChange=int(new_time))
 
 #-------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------
