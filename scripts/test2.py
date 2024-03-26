@@ -239,6 +239,23 @@ def create_cycle_keyframes(anim_attr, pri_count, post_count):
                     cmds.selectKey(anim_attr, k = True, t =(new_time,new_time))
                     cmds.keyframe(absolute=True, timeChange=int(new_time))
 
+def replace_animetion_curve(source_curve, target_curve, range_list, anim_layer=None):
+    if not range_list : return
+    
+    for range in range_list:
+        if len(range) != 2 : continue
+        if range[1] <= range[0] : continue
+        s = range[0]
+        e = range[1]
+        cmds.setKeyframe(target_curve, preserveCurveShape=True, time=(s,s))
+        cmds.setKeyframe(source_curve, preserveCurveShape=True, time=(e,e))
+        cmds.setKeyframe(target_curve, preserveCurveShape=True, time=(s-1,s-1))
+        cmds.setKeyframe(target_curve, preserveCurveShape=True, time=(e+1,e+1))
+    
+        cmds.copyKey( source_curve, time=(s,e), option="curve" )
+        cmds.pasteKey(target_curve, option="replace")
+        
+#replace_animetion_curve("locator1_translateX", "locator1_translateZ", [[20, 30], [40,70]])
 #-------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------
