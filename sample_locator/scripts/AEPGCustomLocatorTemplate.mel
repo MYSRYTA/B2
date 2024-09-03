@@ -1,0 +1,51 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// アイコン・プルダウンメニュー リスト準備
+global proc icon_Menu(string $enumAttrName){
+    attrEnumOptionMenuGrp
+        -label "Icon Type : "
+        -attribute $enumAttrName
+        -enumeratedItem 0 "Line"
+        -enumeratedItem 1 "Rect"
+        -enumeratedItem 2 "Circle"
+		-enumeratedItem 3 "CircleSlice"
+		-enumeratedItem 4 "CircleHalf"
+		-enumeratedItem 5 "RectArrow"
+		-enumeratedItem 6 "Triangle"
+		-enumeratedItem 10 "Box"
+		-enumeratedItem 11 "Slope"
+		-enumeratedItem 12 "Trapezoid"
+		-enumeratedItem 13 "Pyramid"
+		-enumeratedItem 14 "Diamond"
+		-enumeratedItem 15 "Ring"
+		-enumeratedItem 16 "Gravity"
+		-enumeratedItem 17 "Wind"
+		-enumeratedItem 18 "Solver"
+		IconTypeGrp;
+}
+global proc icon_MenuUpdate(string $enumAttrName){
+    attrEnumOptionMenuGrp -e -attribute $enumAttrName IconTypeGrp;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+global proc AEPGCustomLocatorTemplate(string $nodeName) {
+	
+	editorTemplate -beginLayout "Main" -collapse 0 ;
+		editorTemplate -callCustom "icon_Menu" "icon_MenuUpdate" "icon";
+		editorTemplate -label "offset : scale" -addControl "size";
+		editorTemplate -label "offset : rotation" -addControl "offsetRot";
+		editorTemplate -label "offset : transrate" -addControl "offsetTr";
+		editorTemplate -label "draw : wire " -addControl "wire";
+		editorTemplate -label "draw : face " -addControl "face";
+		editorTemplate -label "color : default" -addControl "color0";
+		editorTemplate -label "color : select" -addControl "color1";
+	editorTemplate -endLayout ;
+	
+	editorTemplate -beginLayout "orig" -collapse 0 ;
+		AElocatorInclude $nodeName;
+		AElocatorCommon $nodeName;
+	editorTemplate -endLayout ;
+}
