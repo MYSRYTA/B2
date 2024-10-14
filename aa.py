@@ -209,3 +209,9 @@ cmds.select("pSphere2", add=True)
 cmds.select("locator1", add=True)
 cmds.select("locator2", add=True)
 main()
+
+# 頂点を選択状態にするためのリストを作成
+        vertex_selection = [f'{mesh_name}.vtx[{vtx}]' for vtx in influenced_vertices]
+        
+        # 頂点を選択
+        cmds.select(vertex_selection)
