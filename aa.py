@@ -215,3 +215,111 @@ main()
         
         # 頂点を選択
         cmds.select(vertex_selection)
+        
+////////////////////////////////////////////
+import maya.api.OpenMaya as om2
+import maya.cmds as cmds
+
+def set_skin_weights(mesh_name, joint_name, weight_value=1.0):
+    # 選択したメッシュのMFnMeshを取得
+    selection_list = om2.MSelectionList()
+    selection_list.add(mesh_name)
+    mesh_dag_path = selection_list.getDagPath(0)
+    mesh_fn = om2.MFnMesh(mesh_dag_path)
+
+    # 頂点の位置を確認して、x値が0以上の頂点を抽出
+    vertices_with_positive_x = []
+    for i in range(mesh_fn.numVertices):
+        point = mesh_fn.getPoint(i, om2.MSpace.kWorld)
+        if point.x >= 0:
+            vertices_with_positive_x.append(i)
+
+    if not vertices_with_positive_x:
+        cmds.warning(f"{mesh_name} には x >= 0 の頂点がありません")
+        return
+
+    # MELスクリプトを使用してスキンウェイトを変更
+    for vtx in vertices_with_positive_x:
+        mel_command = f'skinPercent -tv "{joint_name}" {weight_value} {mesh_name}.vtx[{vtx}]'
+        cmds.mel.eval(mel_command)
+
+    print(f"{len(vertices_with_positive_x)} 頂点に対して {joint_name} のウェイトを {weight_value} に設定しました。")
+
+# スクリプトを実行するための例
+mesh_name = "pSphere1"  # メッシュの名前
+joint_name = "jointNameAA"  # インフルエンスにしたいジョイントの名前
+set_skin_weights(mesh_name, joint_name, weight_value=1.0)
+
+import maya.api.OpenMaya as om2
+import maya.cmds as cmds
+
+def set_skin_weights(mesh_name, joint_name_AA, joint_name_BB, weight_AA=0.1, weight_BB=0.9):
+    # メッシュのMFnMeshを取得
+    selection_list = om2.MSelectionList()
+    selection_list.add(mesh_name)
+    mesh_dag_path = selection_list.getDagPath(0)
+    mesh_fn = om2.MFnMesh(mesh_dag_path)
+
+    # 頂点の位置を確認して、x値が0以上の頂点を抽出
+    vertices_with_positive_x = []
+    for i in range(mesh_fn.numVertices):
+        point = mesh_fn.getPoint(i, om2.MSpace.kWorld)
+        if point.x >= 0:
+            vertices_with_positive_x.append(i)
+
+    if not vertices_with_positive_x:
+        cmds.warning(f"{mesh_name} には x >= 0 の頂点がありません")
+        return
+
+    # MELスクリプトを使用してスキンウェイトを変更
+    for vtx in vertices_with_positive_x:
+        # jointNameAA に weight_AA のウェイトを設定
+        mel_command_AA = f'skinPercent -tv "{joint_name_AA}" {weight_AA} {mesh_name}.vtx[{vtx}]'
+        cmds.mel.eval(mel_command_AA)
+
+        # jointNameBB に weight_BB のウェイトを設定
+        mel_command_BB = f'skinPercent -tv "{joint_name_BB}" {weight_BB} {mesh_name}.vtx[{vtx}]'
+        cmds.mel.eval(mel_command_BB)
+
+    print(f"{len(vertices_with_positive_x)} 頂点に対して {joint_name_AA} に {weight_AA}、{joint_name_BB} に {weight_BB} のウェイトを設定しました。")
+
+# スクリプトを実行するための例
+mesh_name = "pSphere1"  # メッシュの名前
+joint_name_AA = "jointNameAA"  # 1つ目のジョイントの名前
+joint_name_BB = "jointNameBB"  # 2つ目のジョイントの名前
+set_skin_weights(mesh_name, joint_name_AA, joint_name_BB, weight_AA=0.1, weight_BB=0.9)
+
+import maya.api.OpenMaya as om2
+import maya.cmds as cmds
+
+def set_all_weights_to_joint(mesh_name, joint_name_AA):
+    # メッシュのMFnMeshを取得
+    selection_list = om2.MSelectionList()
+    selection_list.add(mesh_name)
+    mesh_dag_path = selection_list.getDagPath(0)
+    mesh_fn = om2.MFnMesh(mesh_dag_path)
+
+    # スキンクラスターを取得
+    skin_clusters = cmds.ls(cmds.listHistory(mesh_name), type='skinCluster')
+    if not skin_clusters:
+        cmds.warning(f"{mesh_name} にスキンクラスターがありません")
+        return
+    skin_cluster = skin_clusters[0]
+
+    # このスキンクラスターに影響を与えるすべてのジョイント（インフルエンス）を取得
+    influences = cmds.skinCluster(skin_cluster, query=True, influence=True)
+
+    # すべての頂点のウェイトをjointNameAAに1.0、それ以外のインフルエンスに0.0に設定
+    for vtx_id in range(mesh_fn.numVertices):
+        for joint in influences:
+            if joint == joint_name_AA:
+                cmds.skinPercent(skin_cluster, f"{mesh_name}.vtx[{vtx_id}]", transformValue=[(joint_name_AA, 1.0)])
+            else:
+                cmds.skinPercent(skin_cluster, f"{mesh_name}.vtx[{vtx_id}]", transformValue=[(joint, 0.0)])
+
+    print(f"すべての頂点のウェイトを {joint_name_AA} に 1.0 にし、それ以外のジョイントに 0.0 に設定しました。")
+
+# スクリプトを実行するための例
+mesh_name = "pSphere1"  # メッシュの名前
+joint_name_AA = "jointNameAA"  # ウェイトを設定するジョイントの名前
+set_all_weights_to_joint(mesh_name, joint_name_AA)
