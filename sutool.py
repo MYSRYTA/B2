@@ -330,3 +330,112 @@ except:
 
 custom_tool_ui = CustomToolUI()
 custom_tool_ui.show()
+
+
+///////////////////////////////////////////////////////////
+from maya import cmds
+from PySide6 import QtWidgets, QtCore
+
+class AAA(QtWidgets.QGroupBox):
+    def __init__(self, title, instance_name, parent=None):
+        super(AAA, self).__init__(parent)
+        self.setTitle(title)
+        self.instance_name = instance_name
+
+        # レイアウト
+        self.layout = QtWidgets.QVBoxLayout(self)
+
+        # テキストボックスを追加
+        self.textbox = QtWidgets.QLineEdit(self)
+        self.layout.addWidget(self.textbox)
+
+        # リストウィジェットを作成
+        self.list_widget = QtWidgets.QListWidget(self)
+        self.list_widget.setFixedHeight(1.5)  # 初期高さを1.5pxに設定
+        self.layout.addWidget(self.list_widget)
+
+        # 初期アイテムを追加
+        self.add_initial_items()
+
+        # アイテム数変更に応じてリストの高さを更新
+        self.list_widget.itemChanged.connect(self.update_list_height)
+        self.update_list_height()  # 初期アイテム追加後の高さ調整
+
+        # データのロード
+        self.load_data()
+
+    def add_initial_items(self):
+        """リストに固定アイテムを追加"""
+        self.list_widget.addItem("Item 1")
+        self.list_widget.addItem("Item 2")
+
+    def update_list_height(self):
+        """アイテム数に応じてリストの縦幅を調整"""
+        item_count = self.list_widget.count()
+        base_height = 1.5  # 初期の高さ
+        self.list_widget.setFixedHeight(base_height + max(0, item_count - 1) * 1.5)
+
+    def save_data(self):
+        """Mayaシーンにデータを保存"""
+        cmds.fileInfo(f"{self.instance_name}_textbox", self.textbox.text())
+
+        # リストアイテムの保存
+        for i in range(self.list_widget.count()):
+            item_text = self.list_widget.item(i).text()
+            cmds.fileInfo(f"{self.instance_name}_item_{i}", item_text)
+
+    def load_data(self):
+        """Mayaシーンからデータをロード"""
+        textbox_data = cmds.fileInfo(f"{self.instance_name}_textbox", query=True)
+        if textbox_data:
+            self.textbox.setText(textbox_data)
+
+        # リストアイテムのロード
+        i = 0
+        while True:
+            item_data = cmds.fileInfo(f"{self.instance_name}_item_{i}", query=True)
+            if not item_data:
+                break
+            self.list_widget.addItem(item_data)
+            i += 1
+        self.update_list_height()
+
+class MyTool(QtWidgets.QWidget):
+    def __init__(self):
+        super(MyTool, self).__init__()
+        self.layout = QtWidgets.QVBoxLayout(self)
+
+        # AAAクラスのインスタンスを追加
+        self.instance1 = AAA("AAA Instance 1", "instance1", self)
+        self.instance2 = AAA("AAA Instance 2", "instance2", self)
+
+        self.layout.addWidget(self.instance1)
+        self.layout.addWidget(self.instance2)
+
+        # 保存ボタン
+        self.save_button = QtWidgets.QPushButton("Save Data", self)
+        self.save_button.clicked.connect(self.save_all_data)
+        self.layout.addWidget(self.save_button)
+
+        # その他のUI要素の追加
+        self.show()
+
+    def save_all_data(self):
+        """全インスタンスのデータを保存"""
+        self.instance1.save_data()
+        self.instance2.save_data()
+
+# ツールを起動する関数
+def launch_tool():
+    try:
+        cmds.deleteUI("myToolWindow")
+    except:
+        pass
+
+    window = MyTool()
+    window.setObjectName("myToolWindow")
+    window.setWindowTitle("My Tool")
+    window.show()
+
+# ツールを起動
+launch_tool()
