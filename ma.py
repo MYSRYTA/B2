@@ -93,3 +93,44 @@ merged_audio_node = add_audio_to_trax(output_file)
 
 # マージした音声ファイルをソロモードに設定
 set_solo_mode_for_trax_audio(merged_audio_node)
+
+import maya.cmds as cmds
+
+def get_trax_clip_info():
+    # Traxエディタのすべてのキャラクターを取得
+    characters = cmds.ls(type='character')
+    
+    if not characters:
+        print("No characters found in Trax Editor.")
+        return
+
+    for character in characters:
+        # 各キャラクターのクリップを取得
+        clips = cmds.character(character, query=True, clip=True)
+        
+        if not clips:
+            print(f"No clips found for character: {character}")
+            continue
+
+        print(f"Character: {character}")
+        for clip in clips:
+            # クリップの詳細情報を取得
+            clip_info = cmds.clip(clip, query=True, q=True)
+            start_frame = cmds.clip(clip, query=True, startTime=True)
+            end_frame = cmds.clip(clip, query=True, endTime=True)
+            track_number = cmds.clip(clip, query=True, track=True)
+
+            print(f"  Clip: {clip}")
+            print(f"    Start Frame: {start_frame}")
+            print(f"    End Frame: {end_frame}")
+            print(f"    Track Number: {track_number}")
+            print(f"    Info: {clip_info}")
+
+    # 新規トラックを作成してオーディオクリップを配置
+    new_track = cmds.animLayer("audioTrack", e=True)
+    audio_clip = cmds.sound("audioClip", file="path/to/audio/file.wav")
+    cmds.clipSchedule(addClip=(audio_clip, new_track))
+    print(f"Added audio clip to new track: {new_track}")
+
+# 使用例
+get_trax_clip_info()
