@@ -61,3 +61,131 @@ if usd_stage:
     mesh_translate_data = get_mesh_translate_values(usd_stage, layerIdentifier)
     for path, translate in mesh_translate_data.items():
         print(f"{path}: {translate}")
+
+////////////////////////////////
+
+#include <maya/MPxNode.h>
+#include <maya/MFnNumericAttribute.h>
+#include <maya/MFnMatrixAttribute.h>
+#include <maya/MArrayDataHandle.h>
+#include <maya/MGlobal.h>
+#include <maya/MMatrixArray.h>
+#include <maya/MTransformationMatrix.h>
+#include <maya/MFnPlugin.h>
+
+#include <pxr/usd/usd/stageCache.h>
+#include <pxr/usd/usdGeom/xformable.h>
+#include <pxr/usd/usdGeom/mesh.h>
+
+PXR_NAMESPACE_USING_DIRECTIVE
+
+class UsdMeshTransformNode : public MPxNode {
+public:
+    UsdMeshTransformNode() {}
+    virtual ~UsdMeshTransformNode() {}
+    
+    virtual MStatus compute(const MPlug& plug, MDataBlock& dataBlock) override;
+
+    static void* creator() { return new UsdMeshTransformNode(); }
+    static MStatus initialize();
+
+    static MTypeId id;
+    static MObject inputStageCacheId;
+    static MObject outputMeshTransform;
+};
+
+MTypeId UsdMeshTransformNode::id(0x0013B002);
+MObject UsdMeshTransformNode::inputStageCacheId;
+MObject UsdMeshTransformNode::outputMeshTransform;
+
+MStatus UsdMeshTransformNode::compute(const MPlug& plug, MDataBlock& dataBlock) {
+    if (plug != outputMeshTransform) {
+        return MS::kUnknownParameter;
+    }
+
+    int stageCacheId = dataBlock.inputValue(inputStageCacheId).asInt();
+
+    // USD Stage の取得
+    UsdStageRefPtr stage = UsdMayaStageCache::Get().Find(stageCacheId);
+    if (!stage) {
+        MGlobal::displayWarning("USD Stageが見つかりません");
+        return MS::kFailure;
+    }
+
+    // 出力用の配列
+    MMatrixArray transformValues;
+    
+    // MeshノードのTransformを取得
+    for (const UsdPrim& prim : stage->Traverse()) {
+        if (prim.IsA<UsdGeomMesh>()) {
+            UsdGeomXformable xformable(prim);
+            GfVec3f translate(0.0f, 0.0f, 0.0f);
+            GfVec3f rotate(0.0f, 0.0f, 0.0f);
+            GfVec3f scale(1.0f, 1.0f, 1.0f);
+
+            // Translate
+            UsdAttribute translateAttr = xformable.GetAttribute(TfToken("xformOp:translate"));
+            if (translateAttr) translateAttr.Get(&translate);
+
+            // Rotate
+            UsdAttribute rotateAttr = xformable.GetAttribute(TfToken("xformOp:rotateXYZ"));
+            if (rotateAttr) rotateAttr.Get(&rotate);
+
+            // Scale
+            UsdAttribute scaleAttr = xformable.GetAttribute(TfToken("xformOp:scale"));
+            if (scaleAttr) scaleAttr.Get(&scale);
+
+            // MMatrix へ変換
+            MTransformationMatrix mtx;
+            mtx.setTranslation(MVector(translate[0], translate[1], translate[2]), MSpace::kTransform);
+            double rot[3] = { rotate[0], rotate[1], rotate[2] };
+            mtx.setRotation(rot, MTransformationMatrix::kXYZ);
+            mtx.setScale(scale.GetArray(), MSpace::kTransform);
+
+            transformValues.append(mtx.asMatrix());
+        }
+    }
+
+    // Maya出力アトリビュートに設定
+    MDataHandle outputHandle = dataBlock.outputValue(outputMeshTransform);
+    outputHandle.setMMatrixArray(transformValues);
+    outputHandle.setClean();
+
+    return MS::kSuccess;
+}
+
+// ノードの属性を定義
+MStatus UsdMeshTransformNode::initialize() {
+    MFnNumericAttribute numericAttr;
+    MFnMatrixAttribute matrixAttr;
+
+    // 入力: USDのキャッシュID (int)
+    inputStageCacheId = numericAttr.create("stageCacheId", "sid", MFnNumericData::kInt, 0);
+    numericAttr.setKeyable(true);
+    numericAttr.setStorable(true);
+    addAttribute(inputStageCacheId);
+
+    // 出力: MeshのTransformをMMatrix配列として出力
+    outputMeshTransform = matrixAttr.create("meshTransform", "mxf");
+    matrixAttr.setStorable(false);
+    matrixAttr.setWritable(false);
+    addAttribute(outputMeshTransform);
+
+    // 入出力の関係を定義
+    attributeAffects(inputStageCacheId, outputMeshTransform);
+
+    return MS::kSuccess;
+}
+
+// プラグインの登録
+MStatus initializePlugin(MObject obj) {
+    MFnPlugin plugin(obj, "YourName", "1.0", "Any");
+    return plugin.registerNode("UsdMeshTransformNode", UsdMeshTransformNode::id, 
+                               UsdMeshTransformNode::creator, UsdMeshTransformNode::initialize);
+}
+
+// プラグインの解除
+MStatus uninitializePlugin(MObject obj) {
+    MFnPlugin plugin(obj);
+    return plugin.deregisterNode(UsdMeshTransformNode::id);
+}
