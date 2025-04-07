@@ -189,3 +189,28 @@ MStatus uninitializePlugin(MObject obj) {
     MFnPlugin plugin(obj);
     return plugin.deregisterNode(UsdMeshTransformNode::id);
 }
+
+
+import maya.api.OpenMaya as om
+import maya.api.OpenMayaMPx as ompx
+
+# 属性が変更された際に呼び出されるコールバック関数
+def attributeChangedCallback(node, plug, data):
+    # 変更された属性が "translate" かどうかを確認
+    if plug.partialName() == "translate":
+        print(f"{node.name()} xformOp:translate has been changed!")
+
+# Maya のノードが変更されたときにコールバックを設定
+def registerNodeListener(nodeName):
+    # ノード名を選択リストに追加
+    selectionList = om.MSelectionList()
+    selectionList.add(nodeName)  # ノード名に合わせて変更
+
+    # ノードを取得
+    node = selectionList.getDependNode(0)
+
+    # translate 属性の変更をリスニング
+    om.MNodeMessage.addAttributeChangedCallback(node, attributeChangedCallback)
+
+# 使用例
+registerNodeListener("mayaUsdProxyShape1")  # 監視したいノード名に変更
