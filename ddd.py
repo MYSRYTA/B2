@@ -214,3 +214,157 @@ def registerNodeListener(nodeName):
 
 # 使用例
 registerNodeListener("mayaUsdProxyShape1")  # 監視したいノード名に変更
+
+////
+self._lastRevision = -1
+
+def compute(self, plug, dataBlock):
+    stageId = dataBlock.inputValue(self.inputStageIdAttr).asInt()
+    stage = UsdUtils.StageCache.Get().Find(stageId)
+    if not stage:
+        return
+
+    rootLayer = stage.GetRootLayer()
+    currentRevision = rootLayer.GetRevision()
+    if currentRevision != self._lastRevision:
+        self._lastRevision = currentRevision
+        # 変更があった → ノードの評価を行う
+//////
+import maya.api.OpenMaya as om
+import pxr.Usd as Usd
+import pxr.UsdUtils as UsdUtils
+
+class UsdStageWatcherNode(om.MPxNode):
+    kNodeName = "usdStageWatcherNode"
+    kNodeId = om.MTypeId(0x0007F7F7)  # 任意のユニークID（衝突しないもの）
+
+    inputStageIdAttr = None
+    outputAttr = None
+    _lastRevision = -1
+
+    def __init__(self):
+        super(UsdStageWatcherNode, self).__init__()
+
+    def compute(self, plug, dataBlock):
+        if plug != UsdStageWatcherNode.outputAttr:
+            return
+
+        stageId = dataBlock.inputValue(UsdStageWatcherNode.inputStageIdAttr).asInt()
+        stage = UsdUtils.StageCache.Get().Find(stageId)
+        if not stage:
+            dataBlock.outputValue(UsdStageWatcherNode.outputAttr).setBool(False)
+            return
+
+        layer = stage.GetRootLayer()
+        currentRev = layer.GetRevision()
+
+        changed = (currentRev != UsdStageWatcherNode._lastRevision)
+        UsdStageWatcherNode._lastRevision = currentRev
+
+        dataBlock.outputValue(UsdStageWatcherNode.outputAttr).setBool(changed)
+        dataBlock.setClean(plug)
+
+    @staticmethod
+    def creator():
+        return UsdStageWatcherNode()
+
+    @staticmethod
+    def initialize():
+        numericAttr = om.MFnNumericAttribute()
+
+        UsdStageWatcherNode.inputStageIdAttr = numericAttr.create(
+            "inputStageId", "isd", om.MFnNumericData.kInt, 0)
+        numericAttr.readable = False
+        numericAttr.storable = True
+        numericAttr.writable = True
+        UsdStageWatcherNode.addAttribute(UsdStageWatcherNode.inputStageIdAttr)
+
+        UsdStageWatcherNode.outputAttr = numericAttr.create(
+            "hasChanged", "chg", om.MFnNumericData.kBoolean, False)
+        numericAttr.readable = True
+        numericAttr.storable = False
+        numericAttr.writable = False
+        UsdStageWatcherNode.addAttribute(UsdStageWatcherNode.outputAttr)
+
+        UsdStageWatcherNode.attributeAffects(
+            UsdStageWatcherNode.inputStageIdAttr,
+            UsdStageWatcherNode.outputAttr
+        )
+
+def initializePlugin(plugin):
+    pluginFn = om.MFnPlugin(plugin)
+    pluginFn.registerNode(
+        UsdStageWatcherNode.kNodeName,
+        UsdStageWatcherNode.kNodeId,
+        UsdStageWatcherNode.creator,
+        UsdStageWatcherNode.initialize
+    )
+
+def uninitializePlugin(plugin):
+    pluginFn = om.MFnPlugin(plugin)
+    pluginFn.deregisterNode(UsdStageWatcherNode.kNodeId)
+
+//////
+#include <maya/MPxNode.h>
+#include <maya/MFnTypedAttribute.h>
+#include <maya/MFnNumericAttribute.h>
+#include <maya/MDataBlock.h>
+#include <maya/MTypeId.h>
+
+#include <mayaUsd/base/tokens.h>
+#include <mayaUsd/utils/util.h>
+#include <mayaUsd/stageCache/stageData.h>
+
+class UsdStageConsumerNode : public MPxNode {
+public:
+    UsdStageConsumerNode() = default;
+    virtual ~UsdStageConsumerNode() = default;
+    MStatus compute(const MPlug& plug, MDataBlock& data) override;
+
+    static void* creator() { return new UsdStageConsumerNode(); }
+    static MStatus initialize();
+
+    static MTypeId id;
+    static MObject inStageData;
+    static MObject outBool;
+};
+
+MTypeId UsdStageConsumerNode::id(0x00127FFF);
+MObject UsdStageConsumerNode::inStageData;
+MObject UsdStageConsumerNode::outBool;
+
+MStatus UsdStageConsumerNode::initialize() {
+    MFnTypedAttribute typedAttr;
+    MFnNumericAttribute numAttr;
+
+    inStageData = typedAttr.create("inStageData", "isd", UsdMayaStageData::mayaTypeId);
+    typedAttr.setStorable(true);
+    typedAttr.setWritable(true);
+    addAttribute(inStageData);
+
+    outBool = numAttr.create("changed", "chg", MFnNumericData::kBoolean, false);
+    numAttr.setWritable(false);
+    numAttr.setStorable(false);
+    addAttribute(outBool);
+
+    attributeAffects(inStageData, outBool);
+    return MS::kSuccess;
+}
+
+MStatus UsdStageConsumerNode::compute(const MPlug& plug, MDataBlock& data) {
+    if (plug != outBool)
+        return MS::kUnknownParameter;
+
+    MObject stageDataObj = data.inputValue(inStageData).data();
+    if (stageDataObj.isNull())
+        return MS::kFailure;
+
+    UsdMayaStageData* stageData = dynamic_cast<UsdMayaStageData*>(MPxData::get(stageDataObj));
+    if (!stageData || !stageData->stage)
+        return MS::kFailure;
+
+    // ここで stageData->stage を使って何か処理
+    data.outputValue(outBool).setBool(true);
+    data.setClean(plug);
+    return MS::kSuccess;
+}
