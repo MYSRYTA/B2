@@ -1,0 +1,107 @@
+import maya.cmds as cmds
+import maya.api.OpenMaya as om2
+import maya.api.OpenMaya as om
+
+def connect_locator_chain_from_matrix_array(node_name, matrix_array_attr):
+    # ノード取得
+    sel = om.MSelectionList()
+    sel.add(node_name)
+    mobj = sel.getDependNode(0)
+    dnode = om.MFnDependencyNode(mobj)
+    
+    # 配列アトリビュートのPlug取得
+    try:
+        matrix_array_plug = dnode.findPlug(matrix_array_attr, False)
+    except:
+        om.MGlobal.displayError(f"{matrix_array_attr} が見つかりません")
+        return
+
+    if not matrix_array_plug.isArray:
+        om.MGlobal.displayError(f"{matrix_array_attr} は配列アトリビュートではありません")
+        return
+
+    # 既存ロケータのチェック
+    existing_locs = {}
+    all_transforms = cmds.ls(type="transform")
+    for t in all_transforms:
+        if t.startswith(f"{node_name}_loc"):
+            try:
+                index = int(t.split(f"{node_name}_loc")[-1])
+                existing_locs[index] = t
+            except ValueError:
+                continue
+
+    previous_locator = None
+    print(matrix_array_plug.numElements())
+    for i in range(matrix_array_plug.numElements()):
+        elem_plug = matrix_array_plug.elementByPhysicalIndex(i)
+
+        loc_name = f"{node_name}_loc{i}"
+        loc_node = existing_locs.get(i)
+
+        if elem_plug.isDestination or elem_plug.isConnected:
+            print(f"[{i}] 接続済み: スキップ")
+            previous_locator = loc_node if loc_node else previous_locator
+            continue
+
+        if loc_node and cmds.objExists(f"{loc_node}.offsetParentMatrix"):
+            print(f"[{i}] ロケータ {loc_node} 再利用して接続")
+            cmds.connectAttr(elem_plug.name(), f"{loc_node}.offsetParentMatrix", force=True)
+        else:
+            loc_node = cmds.spaceLocator(name=loc_name)[0]
+            print(f"[{i}] 新規ロケータ作成: {loc_node}")
+            cmds.connectAttr(elem_plug.name(), f"{loc_node}.offsetParentMatrix", force=True)
+
+        # 階層構造の設定
+        if previous_locator:
+            current_parent = cmds.listRelatives(loc_node, parent=True)
+            if not current_parent or current_parent[0] != previous_locator:
+                cmds.parent(loc_node, previous_locator)
+
+        previous_locator = loc_node
+    
+    max_index = matrix_array_plug.numElements()
+    for index, loc_name in existing_locs.items():
+        if index >= max_index:
+            cmds.delete(loc_name)
+            
+# コールバック関数
+def on_attr_changed(msg, plug, otherPlug, clientData):
+
+    node = clientData['node']
+    attr_name = plug.partialName()
+    if plug.array and plug.isElement:
+        print("[DEBUG] Array element changed:", attr_name)
+    print("[DEBUG] Matrix array output changed. Triggering update...")
+    cmds.evalDeferred(lambda: connect_locator_chain_from_matrix_array(node, "output"))
+    
+
+# コールバック登録
+def install_callback_on_matrix_output_array(node_name, attr_name='outputMatrixArray'):
+    sel = om2.MSelectionList()
+    sel.add(node_name)
+    node_obj = sel.getDependNode(0)
+
+    dep_node = om2.MFnDependencyNode(node_obj)
+    attr_plug = dep_node.findPlug(attr_name, False)
+
+    if not attr_plug.isArray:
+        om2.MGlobal.displayError(f"{attr_name} is not an array attribute.")
+        return None
+
+    # 登録
+    cb_id = om2.MNodeMessage.addAttributeChangedCallback(
+        node_obj,
+        on_attr_changed,
+        clientData={'node': node_name}
+    )
+
+    print(f"[INFO] Callback installed on {node_name}.{attr_name}")
+    return cb_id
+# 使用例
+install_callback_on_matrix_output_array("bifrostGraphShape1", "output")
+
+
+
+
+
