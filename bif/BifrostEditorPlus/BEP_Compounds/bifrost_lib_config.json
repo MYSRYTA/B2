@@ -1,0 +1,20 @@
+{
+  "AminoConfigurations": [
+    {
+      "vendorName": "HeydoubleU",
+      "libraryVersion": "2.1.0",
+      "libraryName": "BEP",
+      "jsonLibs": [
+        {
+          "path": "compounds"
+        },
+        {
+          "path": "paintfrost"
+        },
+        {
+          "path": "animfrost"
+        }
+      ]
+    }
+  ]
+}

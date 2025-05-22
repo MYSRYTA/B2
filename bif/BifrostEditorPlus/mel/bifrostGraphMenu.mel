@@ -1,0 +1,503 @@
+// ===========================================================================
+// Copyright 2022 Autodesk, Inc. All rights reserved.
+//
+// Use of this software is subject to the terms of the Autodesk license
+// agreement provided at the time of installation or download, or which
+// otherwise accompanies this software in either electronic or hard copy form.
+// ===========================================================================
+
+proc int isMayaComplete() {
+    if(!catchQuiet(`about -cre`)) {
+        return !`about -cre`;
+    } else if (!catchQuiet(`about -lt`)) {
+        return !`about -lt`;
+    }
+    return 1;
+}
+
+proc loadBifrostGraphRequirements() {
+    string $mayaUSDpluginName = "mayaUsdPlugin";
+    if (`pluginInfo -q -loaded $mayaUSDpluginName` != 1) {
+
+        // TODO BIFROST-6320. Temporary change that force loads Maya USD, if present.
+        if( !catchQuiet( `loadPlugin $mayaUSDpluginName` ) ){
+            print( ("// Bifrost: Pre-loaded " ) + $mayaUSDpluginName + (" to access proper Maya USD libraries.\n") );
+        } else {
+            print( ("// Bifrost: Using Bifrost USD libraries, not Maya USD libraries.\n") );
+        }
+
+        // TODO (BIFROST-6320): Force loading for pre-release.
+        // Need to address BIFROST-6320 before release.
+        // update the plugin manager window if visible
+        // updatePluginCallback may only exists if the plugin manager dialog
+        // has been opened once
+        evalDeferred("if (`exists updatePluginCallback`) { updatePluginCallback; }");
+    }
+
+    string $vnnPluginName = "mayaVnnPlugin";
+    if (isMayaComplete() && `pluginInfo -q -loaded $vnnPluginName` != 1) {
+        loadPlugin $vnnPluginName;
+
+        // update the plugin manager window if visible
+        // updatePluginCallback may only exists if the plugin manager dialog
+        // has been opened once
+        evalDeferred("if (`exists updatePluginCallback`) { updatePluginCallback; }");
+    }
+}
+loadBifrostGraphRequirements;
+
+proc openBifrostGraphEditor(string $graphName)
+{
+    if (!isMayaComplete()) {
+        return;
+    }
+
+    string $controlName = "bifrostGraphEditorControl";
+    string $windowTitle = "Bifrost Graph Editor";
+    if ($graphName == "") {
+        vnnCompoundEditor -name $controlName -title $windowTitle;
+    } else {
+        vnnCompoundEditor -name $controlName -title $windowTitle -edit $graphName;
+    }
+    python "BifrostEditorPlus.UI.initTab()";
+}
+
+global proc openBifrostGraphEditorFromSelection()
+{
+    if (!isMayaComplete()) {
+        return;
+    }
+
+    string $graphName;
+
+    // pick the selected bifrost graph if there is one
+    string $topContainers[] = `ls -selection -type bifrostBoard`;
+    if (size($topContainers) >= 1) {
+        $graphName = $topContainers[0];
+    } else{
+        $topContainers = `ls -selection -transforms`;
+        if (size($topContainers) >= 1) {
+            $topContainers = `listRelatives -type bifrostGraphShape $topContainers[0]`;
+        }
+        else{
+            $topContainers = `ls -selection -type bifrostGraphShape`;
+        }
+
+        if (size($topContainers) >= 1) {
+            $graphName = $topContainers[0];
+        } else {
+            $topContainers = `ls -type bifrostGraphShape`;
+            if (size($topContainers) == 1) {      // exactly one graph in scene so open that
+                $graphName = $topContainers[0];
+            }
+        }
+    }
+
+    openBifrostGraphEditor $graphName;
+}
+
+proc string convertToIBPPath(string $objs[]) {
+    // Was originally
+    // $allValidMeshShapes = stringArrayToString($getFirstAcceptShapes, " ");
+    // $meshObjString = substituteAllString($allValidMeshShapes, "|", "/");
+    //
+    // It's faster to replace | on each obj and concatenate them,
+    // than concatenating first, then replacing | on the huge string
+    //
+    string $path;
+    string $obj;
+    for ($obj in $objs) {
+        if (size($path) > 0) {
+            $path = $path + " ";
+        }
+        $path = $path + substituteAllString($obj, "|", "/");
+    }
+    return $path;
+}
+
+global proc string[] getFirstAcceptableShapes( string $shapes[] )
+{
+    if( size($shapes) == 0 ) return {};
+
+    // Get and select the parents
+    string $getParents[] = `listRelatives -fullPath -parent $shapes`;
+    select -r $getParents;
+
+    pickWalk -d down; // fastest way to get first shape below DAG parent
+
+    // assure the pickwalk didn't pick up an intermediate
+    string $getPickWalkSel[] = `ls -sl -long -dag -shapes`;
+    if (`size($getPickWalkSel)` > 0){
+        while (`getAttr ($getPickWalkSel[0] + ".intermediateObject")` == 1){
+            pickWalk -d right;
+            $getPickWalkSel = `ls -sl -long -dag -shapes`;
+        }
+    }
+
+    // Store first acceptable shapes
+    string $getFirstAcceptShapes[] = `ls -sl -long -dag -shapes -noIntermediate`;
+    select -clear;
+    return $getFirstAcceptShapes;
+}
+
+global proc string createNewBifrostGraphCmd()
+{
+    if (!isMayaComplete()) {
+        return "";
+    }
+
+    int $a, $b;
+    int $meshShpCounter, $curveShpCounter, $partShpCounter = 0;
+    string $buildValidMeshObjArray[] = {};
+    string $buildValidCurveObjArray[] = {};
+    string $buildValidParticleObjArray[] = {};
+    string $allValidMeshShapes, $allValidPartShapes, $meshObjString,
+           $particleObjString, $curveObjString = "";
+
+    // Store Selection of shapes (short name), no intermediates.
+    string $getSelIfAny[] = `ls -sl -long -dag -shapes -noIntermediate`;
+
+    // search and retrieve supported valid types from selection
+    // currently mesh and nParticle shapes
+    for ($a = 0; $a < size($getSelIfAny); $a++){
+        if (`objectType $getSelIfAny[$a]` == "mesh"){
+            $buildValidMeshObjArray[$meshShpCounter] = $getSelIfAny[$a];
+            $meshShpCounter++;
+        }
+        else if (`objectType $getSelIfAny[$a]` == "nParticle"){
+            $buildValidParticleObjArray[$partShpCounter] = $getSelIfAny[$a];
+            $partShpCounter++;
+        } else if (`objectType $getSelIfAny[$a]` == "nurbsCurve"){
+            $buildValidCurveObjArray[$curveShpCounter] = $getSelIfAny[$a];
+            $curveShpCounter++;
+        }
+        // logic for future types can be added here.
+    }
+
+    // Build and format valid Mesh Shapes string
+    string $meshFirstAcceptShapes[] = getFirstAcceptableShapes($buildValidMeshObjArray);
+    $meshObjString = convertToIBPPath($meshFirstAcceptShapes);
+
+    // Build and format valid Particle Shapes string
+    $particleObjString = convertToIBPPath($buildValidParticleObjArray);
+
+    // Build and format valid Curve Shapes string
+    string $curveFirstAcceptShapes[] = getFirstAcceptableShapes($buildValidCurveObjArray);
+    $curveObjString = convertToIBPPath($curveFirstAcceptShapes);
+
+    // Build and string formating for future valid shape types can be added here.
+
+    //---------------------------------------------
+    // Build a new bifrostGraphShape no matter what
+    string $newBoard = `createNode bifrostGraphShape`;
+    sets -edit -forceElement initialShadingGroup $newBoard;
+
+    openBifrostGraphEditor($newBoard);
+    //---------------------------------------------
+
+    // If the selection contains just one type of shapes, we'll reuse the
+    // the existing board input node. If the selection contains multiple types
+    // we'll use the existing board input node for first type, and create new
+    // input nodes for the rest.
+    string $shapeObjStrings[] = { $meshObjString,
+                                  $particleObjString,
+                                  $curveObjString };
+
+    string $portNames[] = { "mesh", "points", "strands" };
+    int $usedExistingInputNode = 0;
+    for ($i = 0; $i < `size($shapeObjStrings)`; $i++) {
+        string $objStrings[] = stringToStringArray( $shapeObjStrings[$i], " " );
+
+        int $nbObjs = size($objStrings);
+        if ($nbObjs == 0) continue;
+
+        string $inputNode = ".input";
+        if ($usedExistingInputNode == 1) {
+            string $res[] = `vnnCompound $newBoard "." -addIONode true`;
+            $inputNode = "." + $res[0];
+        } else {
+            $usedExistingInputNode = 1;
+        }
+
+        string $aminoType = "Object";
+        // use array type if multiple objects are selected, except in the case
+        // of strands, which should get merged into a single object by default.
+        if( $nbObjs > 1 && $portNames[$i] != "strands") {
+            $aminoType = "array<Object>";
+        }
+        vnnNode $newBoard $inputNode
+            -createOutputPort $portNames[$i] $aminoType
+            -portOptions ("pathinfo={path=\"" + $shapeObjStrings[$i] + "\"" +
+                ";channels=*;setOperation=+;active=true;normalsPerPoint=true;normalsPerFaceVertex=true;normalsPerFace=false}");
+    }
+
+    return $newBoard;
+}
+
+proc getMayaMajorVersion()
+{
+    global string $gBifrostMayaMajorVersion = "";
+
+    string $version = `about -apiVersion`;
+    $gBifrostMayaMajorVersion = `substring $version 1 4` ;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+global proc string addBifrostCreateMenuItems(string $parent)
+{
+    if (!isMayaComplete()) {
+        return "";
+    }
+
+    if (`menu -q -ni $parent`) {
+        string $items[] = `menu -q -itemArray $parent`;
+        string $item = $items[10];
+
+        if ($item != "") {
+
+            global string $gBifrostMayaMajorVersion;
+            string $menuItemName;
+            string $res = "";
+
+            // Create Bifrost menu items after the specified menuitem
+            //$menuItemName = `menuItem -p $parent
+            //               -label (uiRes("m_bifrostGraphMenu.kSampleBifrostGraphs"))
+            //               -annotation "TBD..!"
+            //               -version $gBifrostMayaMajorVersion -ia $item
+            //               -subMenu true -tearOff false
+            //                -c "" ` ;
+            //menuItem -label "Sample Graph1" -version $gBifrostMayaMajorVersion -c "" ;
+            //menuItem -label "Sample Graph2" -version $gBifrostMayaMajorVersion -c "" ;
+            //menuItem -label "Sample Graph3" -version $gBifrostMayaMajorVersion -c "" ;
+            //menuItem -label "Sample Graph4" -version $gBifrostMayaMajorVersion -c "" ;
+            //menuItem -label "Sample Graph5" -version $gBifrostMayaMajorVersion -c "" ;
+            //menuItem -label (uiRes("m_bifrostGraphMenu.kBifrostSampleGraphFindmore"))
+            //       -annotation (uiRes("m_bifrostGraphMenu.kBifrostBrowserAnnot"))
+            //       -version $gBifrostMayaMajorVersion
+            //       -c "bifrostBrowser" ;
+            //setParent -menu ..;
+
+            //$res = $res + ";deleteUI -mi " + $menuItemName;
+
+            $menuItemName = `menuItem -p $parent
+                             -label (uiRes("m_bifrostGraphMenu.kBifrostGraph"))
+                             -annotation (uiRes("m_bifrostGraphMenu.kBifrostGraphAnnot"))
+                             -version $gBifrostMayaMajorVersion -ia $item
+                              -c "CreateNewBifrostGraph" ` ;
+
+            $res = $res + ";deleteUI -mi " + $menuItemName;
+
+            $menuItemName = `menuItem -p $parent -divider true -ia $item`;
+            $res = $res + ";deleteUI -mi " + $menuItemName;
+
+            return $res;
+        }
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+global proc string addBifrostWindowMenuItems(string $parent)
+{
+    if (!isMayaComplete()) {
+        return "";
+    }
+
+    if (`menu -q -ni $parent`) {
+        string $menuItemName;
+        string $res = "";
+        global string $gBifrostMayaMajorVersion;
+
+        if ((`menuItem -query -exists wmNodeEditor`)) {
+            $menuItemName = `menuItem -p $parent
+                             -version $gBifrostMayaMajorVersion -ia wmNodeEditor
+                             -label (uiRes("m_bifrostGraphMenu.kBifrostGraphEditor"))
+                             -annotation (uiRes("m_bifrostGraphMenu.kBifrostGraphEditorAnnot"))
+                             -c "openBifrostGraphEditorFromSelection" ` ;
+
+            $res = $res + ";deleteUI -mi " + $menuItemName;
+
+            $menuItemName = `menuItem -p $parent
+                             -version $gBifrostMayaMajorVersion -ia $menuItemName
+                             -label (uiRes("m_bifrostGraphMenu.kBifrostBrowser"))
+                             -annotation (uiRes("m_bifrostGraphMenu.kBifrostBrowserAnnot"))
+                             -c "bifrostBrowser" `;
+
+            $res = $res + ";deleteUI -mi " + $menuItemName;
+        }
+
+        return $res;
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+global proc string addBifrostHelpMenuItems(string $parent)
+{
+    if (!isMayaComplete()) {
+        return "";
+    }
+
+    if (`menu -q -ni $parent`) {
+        string $items[] = `menu -q -itemArray $parent`;
+        string $tutorialsMenu;
+        string $item;
+        for ($item in $items) {
+            string $itemLabel = `menuItem -q -label $item`;
+            if ($itemLabel == "Tutorials") {
+                $tutorialsMenu = $item;
+                break;
+            }
+        }
+
+        if ($tutorialsMenu != "") {
+            global string $gBifrostMayaMajorVersion;
+            menuItem -e -version $gBifrostMayaMajorVersion $tutorialsMenu;
+
+            string $childItems[] = `menu -q -itemArray $tutorialsMenu`;
+            string $child0 = $childItems[0];
+
+            if ($child0 != "") {
+                string $menuItemName;
+                string $res = "";
+
+                // Create Bifrost menu items after the specified menuitem
+                $menuItemName = `menuItem -p $tutorialsMenu
+                                 -version $gBifrostMayaMajorVersion -ia $child0
+                                 -label (uiRes("m_bifrostGraphMenu.kBifrostGraphTutorials"))
+                                 -annotation (uiRes("m_bifrostGraphMenu.kBifrostGraphTutorialsAnnot"))
+                                  -c "OpenBifrostGraphTutorials" ` ;
+
+                $res = $res + ";deleteUI -mi " + $menuItemName;
+
+                return $res;
+            }
+        }
+    }
+    return "";
+}
+
+///////////////////////////////////////////////////////////////////////////////
+proc addBifrostMenuItems(string $mainMenu, string $cmd, string $globVarName)
+{
+    if (!isMayaComplete()) {
+        return;
+    }
+
+    $tmp = ";global string $"+$globVarName+
+        ";  if (($"+$globVarName+" == \"\")) $"+$globVarName+" = `"+$cmd+"`;";
+
+    // Let's add a call back to the menu even when the menu exists already.
+    string $buildMethod = `menu -q -pmc $mainMenu`;
+    menu -e -pmc ($buildMethod + $tmp) $mainMenu;
+
+    if (`menu -q -ni $mainMenu`) { // Parent menu is already created,
+        eval ($tmp);               // Add a new entry to the menu
+    }
+
+    return;
+}
+
+// Remove UI when plugin is unloaded
+///////////////////////////////////////////////////////////////////////////////
+proc removeBifrostMenuItems(string $var, string $varName, string $mainMenu)
+{
+    string $buildMethod = `menu -q -pmc $mainMenu`;
+    $buildMethod =
+        `substitute (";global string \$"+$varName+".*`;") $buildMethod ""`;
+    menu -e -pmc $buildMethod $mainMenu;
+
+    if ($var != "") { // The menus were built, remove them.
+        eval $var;
+    }
+    $tmp = "global string $"+$varName+ ";$"+$varName+" = \"\"";
+    eval ($tmp);
+}
+
+
+
+///////////////////////////////////////////////////////////////////////////////
+global proc int bifrostGraph_preventDeletionFromSceneCleanupCB(string $nodeToBeDeleted, string $connectedNode, string $connection)
+{
+    string $bifrostBoardConnectedNodes[] = `listConnections -type bifrostBoard -source false $connection`;
+    string $bifrostShapeConnectedNodes[] = `listConnections -type bifrostGraphShape -source false $connection`;
+    return size($bifrostBoardConnectedNodes) > 0 || size($bifrostShapeConnectedNodes) > 0;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+global proc bifrostGraph_loadui()
+{
+    // dummy call to the uiRes in order to load bifrostGraphMenu.res.mel
+    // without choking if localized file (chinese or japanese) is not found
+    catchQuiet(uiRes("m_bifrostGraphMenu.kBifrostGraph"));
+
+    getMayaMajorVersion();
+    if (!`runTimeCommand -exists CreateNewBifrostGraph`) {
+        runTimeCommand -default true
+            -annotation (uiRes("m_bifrostGraphMenu.kCreateBifrostGraphAnnot"))
+            -category   "Menu items.Bifrost"
+            -command    "createNewBifrostGraphCmd"
+            CreateNewBifrostGraph;
+    }
+
+    if (!`runTimeCommand -exists OpenBifrostGraphTutorials`) {
+        runTimeCommand -default true
+            -annotation (uiRes("m_bifrostGraphMenu.kBifrostGraphTutorialsAnnot"))
+            -category   ("Menu items.Bifrost")
+            -command    ( "showHelp -absolute \"" +
+                          (uiRes("m_bifrostGraphMenu.kBifrostGraphTutorialsURL")) + "\"" )
+            OpenBifrostGraphTutorials;
+    }
+
+    if (isMayaComplete()) {
+        global string $gBifrostCreateMenuVariable = "";
+        global string $gMainCreateMenu;
+        string $parent = $gMainCreateMenu;          // Create menu
+        string $cmd = "addBifrostCreateMenuItems "+ $parent;
+        addBifrostMenuItems($parent, $cmd, "gBifrostCreateMenuVariable");
+
+        global string $gBifrostWindowMenuVariable = "";
+        global string $gMainWindowMenu;
+        $parent = $gMainWindowMenu;                 // Window menu
+        $cmd = "addBifrostWindowMenuItems "+ $parent;
+        addBifrostMenuItems($parent, $cmd, "gBifrostWindowMenuVariable");
+
+        global string $gBifrostHelpMenuVariable = "";
+        global string $gMainHelpMenu;
+        $parent = $gMainHelpMenu;                   // Help Menu
+        $cmd = "addBifrostHelpMenuItems "+ $parent;
+        addBifrostMenuItems($parent, $cmd, "gBifrostHelpMenuVariable");
+    }
+
+    callbacks -addCallback "bifrostGraph_preventDeletionFromSceneCleanupCB" -hook "preventMaterialDeletionFromCleanUpSceneCommand" -owner "BifrostGraph";
+}
+
+///////////////////////////////////////////////////////////////////////////////
+global proc bifrostGraph_unloadui()
+{
+    // Remove the callback from all 3 menus.
+    global string $gBifrostCreateMenuVariable,
+                  $gBifrostWindowMenuVariable, $gBifrostHelpMenuVariable ;
+
+    if ($gBifrostCreateMenuVariable != "") {
+        global string $gMainCreateMenu;
+        // Create Menu
+        removeBifrostMenuItems($gBifrostCreateMenuVariable,
+                               "gBifrostCreateMenuVariable", $gMainCreateMenu);
+    }
+
+    if ($gBifrostWindowMenuVariable != "") {
+        global string $gMainWindowMenu;
+        // Windows Menu
+        removeBifrostMenuItems($gBifrostWindowMenuVariable,
+                               "gBifrostWindowMenuVariable", $gMainWindowMenu);
+    }
+
+    if ($gBifrostHelpMenuVariable != "") {
+        global string $gMainHelpMenu;
+        // Help Menu
+        removeBifrostMenuItems($gBifrostHelpMenuVariable,
+                               "gBifrostHelpMenuVariable", $gMainHelpMenu);
+    }
+
+    callbacks -removeCallback  "bifrostGraph_preventDeletionFromSceneCleanupCB" -hook "preventMaterialDeletionFromCleanUpSceneCommand" -owner "BifrostGraph";
+}

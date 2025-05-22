@@ -1,0 +1,1 @@
+Set of nodes for converting stroke data to/from an object. This conversion is required inside of **save_strokes** as writing custom structs to file is not currently supported.

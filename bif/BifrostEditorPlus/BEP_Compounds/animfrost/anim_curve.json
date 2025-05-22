@@ -1,0 +1,267 @@
+{
+    "header": {
+        "metadata": [
+            {
+                "metaName": "adskFileFormatVersion",
+                "metaValue": "100L"
+            }
+        ]
+    },
+    "namespaces": [],
+    "types": [],
+    "compounds": [
+        {
+            "name": "BEP::animfrost::anim_curve",
+            "uriImported": "file:///anim_curve.json",
+            "metadata": [
+                {
+                    "metaName": "io_nodes",
+                    "metadata": [
+                        {
+                            "metaName": "io_inodes",
+                            "metadata": [
+                                {
+                                    "metaName": "input",
+                                    "metadata": [
+                                        {
+                                            "metaName": "DisplayMode",
+                                            "metaType": "string",
+                                            "metaValue": "2"
+                                        },
+                                        {
+                                            "metaName": "LayoutPos",
+                                            "metaType": "string",
+                                            "metaValue": "-483 -87"
+                                        },
+                                        {
+                                            "metaName": "io_ports",
+                                            "metadata": [
+                                                {
+                                                    "metaName": "curve"
+                                                },
+                                                {
+                                                    "metaName": "color"
+                                                },
+                                                {
+                                                    "metaName": "interact_curve"
+                                                },
+                                                {
+                                                    "metaName": "interacting"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "metaName": "io_onodes",
+                            "metadata": [
+                                {
+                                    "metaName": "output",
+                                    "metadata": [
+                                        {
+                                            "metaName": "DisplayMode",
+                                            "metaType": "string",
+                                            "metaValue": "2"
+                                        },
+                                        {
+                                            "metaName": "LayoutPos",
+                                            "metaType": "string",
+                                            "metaValue": "342.509 -65.0373"
+                                        },
+                                        {
+                                            "metaName": "io_ports",
+                                            "metadata": [
+                                                {
+                                                    "metaName": "output"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "metaName": "ViewportRect",
+                    "metaType": "string",
+                    "metaValue": "-806.597 -500.484 1398.62 941.445"
+                },
+                {
+                    "metaName": "DisplayMode",
+                    "metaType": "string",
+                    "metaValue": "2"
+                },
+                {
+                    "metaName": "LayoutPos",
+                    "metaType": "string",
+                    "metaValue": "317 25"
+                },
+                {
+                    "metaName": "UILayout",
+                    "metaType": "string",
+                    "metaValue": "{\n    \"NodeLayout\": {\n        \"hideUndeclaredPorts\": false,\n        \"items\": [\n            {\n                \"expanded\": false,\n                \"group\": \"Curve\",\n                \"items\": [\n                    {\n                        \"port\": \"curve\"\n                    },\n                    {\n                        \"port\": \"color\"\n                    },\n                    {\n                        \"port\": \"interacting\"\n                    },\n                    {\n                        \"port\": \"interact_curve\"\n                    }\n                ]\n            }\n        ]\n    }\n}\n"
+                },
+                {
+                    "metaName": "PortExpandedState",
+                    "metadata": [
+                        {
+                            "metaName": "Curve",
+                            "metaType": "string",
+                            "metaValue": "0"
+                        }
+                    ]
+                }
+            ],
+            "ports": [
+                {
+                    "portName": "curve",
+                    "portDirection": "input",
+                    "portType": "Math::FCurve",
+                    "portDefault": {
+                        "version": "1",
+                        "preExtrapolation": "0",
+                        "postExtrapolation": "0",
+                        "points": [
+                            {
+                                "point": {
+                                    "locked": "1",
+                                    "interpolation": "1",
+                                    "pcn": {
+                                        "xp": "-0.43221799999999999",
+                                        "yp": "-0.0016130000000000001",
+                                        "x": "0",
+                                        "y": "0",
+                                        "xn": "0.43221799999999999",
+                                        "yn": "0.0016130000000000001"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "portName": "output",
+                    "portDirection": "output",
+                    "portType": "float"
+                },
+                {
+                    "portName": "color",
+                    "portDirection": "input",
+                    "portType": "Math::float3",
+                    "portDefault": {
+                        "x": "0.349999994f",
+                        "y": "0.800000012f",
+                        "z": "0.800000012f"
+                    },
+                    "metadata": [
+                        {
+                            "metaName": "UIWidget",
+                            "metaType": "string",
+                            "metaValue": "ColorPicker"
+                        }
+                    ]
+                },
+                {
+                    "portName": "interact_curve",
+                    "portDirection": "input",
+                    "portType": "float",
+                    "portDefault": "0f"
+                },
+                {
+                    "portName": "interacting",
+                    "portDirection": "input",
+                    "portType": "bool",
+                    "portDefault": "false"
+                }
+            ],
+            "compoundNodes": [
+                {
+                    "nodeName": "evaluate_fcurve",
+                    "nodeType": "Core::FCurve::evaluate_fcurve",
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "-192.247 134.122"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "time",
+                    "nodeType": "Core::Time::time",
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "-498.416 189.855"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "if",
+                    "nodeType": "Core::Logic::if",
+                    "metadata": [
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "76 -61"
+                        },
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        }
+                    ]
+                }
+            ],
+            "connections": [
+                {
+                    "source": ".curve",
+                    "target": "evaluate_fcurve.fcurve"
+                },
+                {
+                    "source": "time.frame",
+                    "target": "evaluate_fcurve.x"
+                },
+                {
+                    "source": ".interact_curve",
+                    "target": "if.true_case"
+                },
+                {
+                    "source": "evaluate_fcurve.y",
+                    "target": "if.false_case"
+                },
+                {
+                    "source": ".interacting",
+                    "target": "if.condition"
+                },
+                {
+                    "source": "if.output",
+                    "target": ".output"
+                }
+            ],
+            "values": [],
+            "reservedNodeNames": [
+                {
+                    "name": "input"
+                },
+                {
+                    "name": "output"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,97 @@
+{
+    "header": {
+        "metadata": [
+            {
+                "metaName": "adskFileFormatVersion",
+                "metaValue": "100L"
+            }
+        ]
+    },
+    "namespaces": [],
+    "types": [
+        {
+            "structName": "BEP::paintfrost::brush",
+            "structMembers": [
+                {
+                    "memberName": "radius",
+                    "memberType": "float"
+                },
+                {
+                    "memberName": "value",
+                    "memberType": "float"
+                },
+                {
+                    "memberName": "color",
+                    "memberType": "Math::float4"
+                },                
+                {
+                    "memberName": "profile",
+                    "memberType": "Math::FCurve"
+                }
+            ]
+        },
+        {
+            "structName": "BEP::paintfrost::tablet",
+            "structMembers": [
+                {
+                    "memberName": "pressure",
+                    "memberType": "float"
+                },
+                {
+                    "memberName": "tilt",
+                    "memberType": "Math::float2"
+                },
+                {
+                    "memberName": "eraser",
+                    "memberType": "bool"
+                }
+            ]
+        },
+        {
+            "structName": "BEP::paintfrost::stats",
+            "structMembers": [
+                {
+                    "memberName": "painting",
+                    "memberType": "bool"
+                },
+                {
+                    "memberName": "flood",
+                    "memberType": "bool"
+                },
+                {
+                    "memberName": "time",
+                    "memberType": "float"
+                },
+                {
+                    "memberName": "modifiers",
+                    "memberType": "uint"
+                }
+            ]
+        },
+        {
+            "structName": "BEP::paintfrost::stroke_step",
+            "structMembers": [
+                {
+                    "memberName": "position",
+                    "memberType": "Math::float3"
+                },
+                {
+                    "memberName": "direction",
+                    "memberType": "Math::float3"
+                },
+                {
+                    "memberName": "brush",
+                    "memberType": "BEP::paintfrost::brush"
+                },
+                {
+                    "memberName": "tablet",
+                    "memberType": "BEP::paintfrost::tablet"
+                },
+                {
+                    "memberName": "stats",
+                    "memberType": "BEP::paintfrost::stats"
+                }
+            ]
+        }
+    ]
+}

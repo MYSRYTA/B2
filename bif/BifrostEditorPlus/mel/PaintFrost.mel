@@ -1,0 +1,154 @@
+global string $gPaintFrostArgs[5]; // {container, node, arg string, screen space, tablet, brush size}
+global float $gPaintFrostTimer;
+global vector $gPaintFrostLast;
+global float $gCamTransform[];
+python "import time";
+
+proc forceUpdate()
+{
+	global string $gPaintFrostArgs[];
+	getAttr($gPaintFrostArgs[0] + ".paintfrost_pull");
+}
+
+
+proc getBrushSettings()
+{
+	global string $gPaintFrostArgs[];
+
+	float $values[];
+	$values[0] = `artUserPaintCtx -q -radius "artUserPaintContext"`;
+	$values[1] = `artUserPaintCtx -q -value "artUserPaintContext"`;
+	
+	vnnNode $gPaintFrostArgs[0] $gPaintFrostArgs[1] -spv "brush_data" ("{"+ floatArrayToString($values, ",") +"}");
+}
+
+
+proc getCamTransform()
+{
+	global float $gCamTransform[];
+	string $panel = `getPanel -up`;
+	string $cam = `modelEditor -q -cam $panel`;
+	$gCamTransform = `xform -q -ws -matrix $cam`;
+
+}
+
+
+global proc PaintFrostSetTool(string $container, string $node)
+{
+	global string $gPaintFrostArgs[];
+	$gPaintFrostArgs[0] = $container;
+	$gPaintFrostArgs[1] = $node;
+
+	// Base args string and stroke direction space
+	if (`vnnNode $container $node -qpv "screen_space"` == "1") {
+		$gPaintFrostArgs[2] = "-sp world -dt screenV";
+		$gPaintFrostArgs[3] = "1";
+	} else {
+		$gPaintFrostArgs[2] = "-sp world -dt worldV";
+		$gPaintFrostArgs[3] = "0";
+	}
+
+	//create port for forcing updates
+	string $ports[] = `vnnCompound $container "/" -listPorts -op`;
+	if (stringArrayFind("paintfrost_pull", 0, $ports) == -1)
+		vnnCompound $container "/" -cop "paintfrost_pull" "bool";
+
+
+	if (!`artUserPaintCtx -ex "artUserPaintContext"`) ScriptPaintTool;
+	artUserPaintCtx -e -tsc "" -gvc "" -gsc "" -cc  "" -tcc "" -gac ""
+		-ic "PaintFrostInit"
+		-fc "PaintFrostFinalize"
+		-svc "PaintFrostSetValue"
+		"artUserPaintContext";
+
+	setToolTo "artUserPaintContext";
+}
+
+
+global proc string PaintFrostInit(string $name) 
+{
+	global string $gPaintFrostArgs[];
+	global float $gPaintFrostTimer;
+	getBrushSettings;
+	getCamTransform;
+
+	// should tablet data
+	$gPaintFrostArgs[4] = `vnnNode $gPaintFrostArgs[0] $gPaintFrostArgs[1] -qpv "enable_tablet"`;
+	if ((int)$gPaintFrostArgs[4])
+		python "BifrostEditorPlus.paintfrost.installEF()";
+
+	// Override radius
+	float $radius = `vnnNode $gPaintFrostArgs[0] $gPaintFrostArgs[1] -qpv "radius_override"`;
+	if ($radius > 0) {
+		$gPaintFrostArgs[5] = `artUserPaintCtx -q -radius "artUserPaintContext"`;
+		artUserPaintCtx -e -radius $radius "artUserPaintContext";
+	}
+
+	// Set step
+	float $step = `vnnNode $gPaintFrostArgs[0] $gPaintFrostArgs[1] -qpv "step_spacing"`;
+	if ($step > 0)
+		artUserPaintCtx -e -stS $step "artUserPaintContext";
+
+	// enable painting and start timer
+	vnnNode $gPaintFrostArgs[0] $gPaintFrostArgs[1] -spv "painting" 1;
+	$gPaintFrostTimer = python("time.time()");
+	return ($gPaintFrostArgs[2]);
+}
+
+
+global proc PaintFrostFinalize(int $surfaceId)
+{
+	global string $gPaintFrostArgs[];
+
+	// remove EF
+	if ((int)$gPaintFrostArgs[4]) {
+		python "BifrostEditorPlus.paintfrost.removeEF()";
+		vnnNode $gPaintFrostArgs[0] $gPaintFrostArgs[1] -spv "tablet_data" "{1,0,0,0}";
+	}
+
+	// Restore radius override
+	float $radius = `vnnNode $gPaintFrostArgs[0] $gPaintFrostArgs[1] -qpv "radius_override"`;
+	if ($radius > 0) {
+		artUserPaintCtx -e -radius ((float)$gPaintFrostArgs[5]) "artUserPaintContext";
+	}
+
+	vnnNode $gPaintFrostArgs[0] $gPaintFrostArgs[1] -spv "painting" 0;
+}
+
+
+global proc PaintFrostSetValue(
+	int $surfaceId, int $sampleId, float $val,
+	float $dirx, float $diry, float $dirz,
+	float $sx, float $sy, float $sz
+)
+{
+	global string $gPaintFrostArgs[];
+	global float $gPaintFrostTimer;
+	global vector $gPaintFrostLast;
+
+	// check if stroke has moved since the last sample
+	vector $svec = <<$sx, $sy, $sz>>;
+	if ($gPaintFrostLast == $svec) return;
+	$gPaintFrostLast = $svec;
+
+	// set stroke data
+	float $dt = python("time.time()") - $gPaintFrostTimer;
+	float $mods = `getModifiers`;
+
+	if ((int)$gPaintFrostArgs[3]) {
+		global float $gCamTransform[];
+		float $v[] = pointMatrixMult({$dirx, $diry, $dirz}, $gCamTransform);
+		$dirx = $v[0]; $diry = $v[1]; $dirz = $v[2];
+	}
+
+	float $values[] = {$dt, $mods, 0, $sx, $sy, $sz, $dirx, $diry, $dirz};
+	vnnNode $gPaintFrostArgs[0] $gPaintFrostArgs[1] -spv "stroke_data" ("{"+ floatArrayToString($values, ",") +"}");
+
+	// if tablet
+	if ((int)$gPaintFrostArgs[4]) {
+		string $data = python("BifrostEditorPlus.paintfrost.getTablet()");
+		vnnNode $gPaintFrostArgs[0] $gPaintFrostArgs[1] -spv "tablet_data" $data;
+	}
+
+	forceUpdate;
+}

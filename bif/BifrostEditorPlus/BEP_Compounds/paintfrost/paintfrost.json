@@ -1,0 +1,782 @@
+{
+    "header": {
+        "metadata": [
+            {
+                "metaName": "adskFileFormatVersion",
+                "metaValue": "100L"
+            }
+        ]
+    },
+    "namespaces": [],
+    "types": [],
+    "compounds": [
+        {
+            "name": "BEP::paintfrost::paintfrost",
+            "uriImported": "stream:/bifrostGraphShape3",
+            "metadata": [
+                {
+                    "metaName": "documentation",
+                    "metaType": "string",
+                    "metaValue": "docs/paintfrost.md"
+                },
+                {
+                    "metaName": "icon",
+                    "metaType": "string",
+                    "metaValue": "icons/paintfrost.png"
+                },
+                {
+                    "metaName": "Paint Selected_script",
+                    "metaType": "string",
+                    "metaValue": "import maya.cmds as mc\nsel = \" \".join(mc.ls(sl=True))\nmc.vnnNode(BifrostEditorPlus.currentGraph(), BifrostEditorPlus.currentNode(), spv=[\"paint_surfaces\", sel])\nmel.eval(f'PaintFrostSetTool(\"{BifrostEditorPlus.currentGraph()}\", \"{BifrostEditorPlus.currentNode()}\")')"
+                },
+                {
+                    "metaName": "Paint Last_script",
+                    "metaType": "string",
+                    "metaValue": "from maya import mel, cmds as mc\nmc.select(mc.vnnNode(BifrostEditorPlus.currentGraph(), BifrostEditorPlus.currentNode(), qpv=\"paint_surfaces\").split(\" \"))\nmel.eval(f'PaintFrostSetTool(\"{BifrostEditorPlus.currentGraph()}\", \"{BifrostEditorPlus.currentNode()}\")')"
+                },
+                {
+                    "metaName": "Flood_script",
+                    "metaType": "string",
+                    "metaValue": "import maya.cmds as mc\nconatainer = BifrostEditorPlus.currentGraph()\nmc.vnnNode(conatainer, BifrostEditorPlus.currentNode(), spv=[\"flood\", 1])\nmc.getAttr(conatainer + \".paintfrost_pull\")\nmc.vnnNode(conatainer, BifrostEditorPlus.currentNode(), spv=[\"flood\", 0])"
+                },
+                {
+                    "metaName": "scriptButtons",
+                    "metaType": "string",
+                    "metaValue": "Paint Selected;Paint Last;Flood"
+                },
+                {
+                    "metaName": "io_nodes",
+                    "metadata": [
+                        {
+                            "metaName": "io_inodes",
+                            "metadata": [
+                                {
+                                    "metaName": "input",
+                                    "metadata": [
+                                        {
+                                            "metaName": "DisplayMode",
+                                            "metaType": "string",
+                                            "metaValue": "2"
+                                        },
+                                        {
+                                            "metaName": "LayoutPos",
+                                            "metaType": "string",
+                                            "metaValue": "-1294.56 -472.487"
+                                        },
+                                        {
+                                            "metaName": "io_ports",
+                                            "metadata": [
+                                                {
+                                                    "metaName": "paint_surfaces"
+                                                },
+                                                {
+                                                    "metaName": "screen_space"
+                                                },
+                                                {
+                                                    "metaName": "enable_tablet"
+                                                },
+                                                {
+                                                    "metaName": "step_spacing"
+                                                },
+                                                {
+                                                    "metaName": "radius_override"
+                                                },
+                                                {
+                                                    "metaName": "remap_pressure"
+                                                },
+                                                {
+                                                    "metaName": "color"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "metaName": "input1",
+                                    "metadata": [
+                                        {
+                                            "metaName": "DisplayMode",
+                                            "metaType": "string",
+                                            "metaValue": "2"
+                                        },
+                                        {
+                                            "metaName": "LayoutPos",
+                                            "metaType": "string",
+                                            "metaValue": "-1431.25 -853.604"
+                                        },
+                                        {
+                                            "metaName": "io_ports",
+                                            "metadata": [
+                                                {
+                                                    "metaName": "stroke_data"
+                                                },
+                                                {
+                                                    "metaName": "brush_data"
+                                                },
+                                                {
+                                                    "metaName": "tablet_data"
+                                                },
+                                                {
+                                                    "metaName": "painting"
+                                                },
+                                                {
+                                                    "metaName": "flood"
+                                                },
+                                                {
+                                                    "metaName": "profile"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "metaName": "io_onodes",
+                            "metadata": [
+                                {
+                                    "metaName": "output",
+                                    "metadata": [
+                                        {
+                                            "metaName": "DisplayMode",
+                                            "metaType": "string",
+                                            "metaValue": "2"
+                                        },
+                                        {
+                                            "metaName": "LayoutPos",
+                                            "metaType": "string",
+                                            "metaValue": "268.396 -1055.19"
+                                        },
+                                        {
+                                            "metaName": "io_ports",
+                                            "metadata": [
+                                                {
+                                                    "metaName": "stroke_step"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "metaName": "ViewportRect",
+                    "metaType": "string",
+                    "metaValue": "-1125.4 -1512.78 1896.6 1567.59"
+                },
+                {
+                    "metaName": "UILayout",
+                    "metaType": "string",
+                    "metaValue": "{\n    \"NodeLayout\": {\n        \"hideUndeclaredPorts\": false,\n        \"items\": [\n            {\n                \"expanded\": false,\n                \"group\": \"Settings\",\n                \"items\": [\n                    {\n                        \"port\": \"color\"\n                    },\n                    {\n                        \"port\": \"profile\"\n                    },\n                    {\n                        \"port\": \"step_spacing\"\n                    },\n                    {\n                        \"port\": \"radius_override\"\n                    },\n                    {\n                        \"port\": \"screen_space\"\n                    },\n                    {\n                        \"expanded\": false,\n                        \"group\": \"Tablet\",\n                        \"items\": [\n                            {\n                                \"port\": \"enable_tablet\"\n                            },\n                            {\n                                \"port\": \"get_samples\"\n                            },\n                            {\n                                \"port\": \"sample_properties\"\n                            },\n                            {\n                                \"port\": \"radius_min\"\n                            },\n                            {\n                                \"port\": \"remap_pressure\"\n                            }\n                        ]\n                    },\n                    {\n                        \"port\": \"update_per_sample\"\n                    },\n                    {\n                        \"port\": \"get_brush_settings\"\n                    },\n                    {\n                        \"expanded\": true,\n                        \"group\": \"Grid Paint\",\n                        \"items\": [\n                            {\n                                \"port\": \"grid_divisions\"\n                            },\n                            {\n                                \"port\": \"jitter\"\n                            }\n                        ]\n                    },\n                    {\n                        \"expanded\": true,\n                        \"group\": \"Stroke Feedback\",\n                        \"items\": [\n                            {\n                                \"port\": \"enable_feedback\"\n                            },\n                            {\n                                \"port\": \"feedback_attribute\"\n                            }\n                        ]\n                    }\n                ]\n            },\n            {\n                \"expanded\": false,\n                \"group\": \"data\",\n                \"items\": [\n                    {\n                        \"port\": \"paint_surfaces\"\n                    },\n                    {\n                        \"port\": \"stroke_data\"\n                    },\n                    {\n                        \"port\": \"sample_data\"\n                    },\n                    {\n                        \"port\": \"tablet_data\"\n                    },\n                    {\n                        \"port\": \"fb_id\"\n                    },\n                    {\n                        \"port\": \"brush_data\"\n                    },\n                    {\n                        \"port\": \"sample_raw\"\n                    },\n                    {\n                        \"port\": \"sample_data_raw\"\n                    },\n                    {\n                        \"port\": \"painting\"\n                    },\n                    {\n                        \"port\": \"flood\"\n                    }\n                ]\n            }\n        ]\n    }\n}\n"
+                },
+                {
+                    "metaName": "PortExpandedState",
+                    "metadata": [
+                        {
+                            "metaName": "Settings.Return Settings",
+                            "metaType": "string",
+                            "metaValue": "1"
+                        },
+                        {
+                            "metaName": "data",
+                            "metaType": "string",
+                            "metaValue": "0"
+                        },
+                        {
+                            "metaName": "Settings.Tablet",
+                            "metaType": "string",
+                            "metaValue": "0"
+                        },
+                        {
+                            "metaName": "Settings",
+                            "metaType": "string",
+                            "metaValue": "0"
+                        }
+                    ]
+                },
+                {
+                    "metaName": "DisplayMode",
+                    "metaType": "string",
+                    "metaValue": "2"
+                },
+                {
+                    "metaName": "LayoutPos",
+                    "metaType": "string",
+                    "metaValue": "-1183 -1349.98"
+                }
+            ],
+            "ports": [
+                {
+                    "portName": "paint_surfaces",
+                    "portDirection": "input",
+                    "portType": "string",
+                    "portDefault": ""
+                },
+                {
+                    "portName": "screen_space",
+                    "portDirection": "input",
+                    "portType": "bool",
+                    "portDefault": "false"
+                },
+                {
+                    "portName": "enable_tablet",
+                    "portDirection": "input",
+                    "portType": "bool",
+                    "portDefault": "false"
+                },
+                {
+                    "portName": "stroke_data",
+                    "portDirection": "input",
+                    "portType": "Math::float3x3",
+                    "portDefault": {
+                        "c0": {
+                            "x": "0f",
+                            "y": "0f",
+                            "z": "0f"
+                        },
+                        "c1": {
+                            "x": "0f",
+                            "y": "0f",
+                            "z": "0f"
+                        },
+                        "c2": {
+                            "x": "0f",
+                            "y": "0f",
+                            "z": "0f"
+                        }
+                    }
+                },
+                {
+                    "portName": "brush_data",
+                    "portDirection": "input",
+                    "portType": "Math::float2",
+                    "portDefault": {
+                        "x": "1f",
+                        "y": "1f"
+                    }
+                },
+                {
+                    "portName": "tablet_data",
+                    "portDirection": "input",
+                    "portType": "BEP::paintfrost::tablet",
+                    "portDefault": {
+                        "pressure": "1f",
+                        "tilt": {
+                            "x": "0f",
+                            "y": "0f"
+                        },
+                        "eraser": "false"
+                    }
+                },
+                {
+                    "portName": "painting",
+                    "portDirection": "input",
+                    "portType": "bool",
+                    "portDefault": "false"
+                },
+                {
+                    "portName": "flood",
+                    "portDirection": "input",
+                    "portType": "bool",
+                    "portDefault": "false"
+                },
+                {
+                    "portName": "profile",
+                    "portDirection": "input",
+                    "portType": "Math::FCurve",
+                    "portDefault": {
+                        "version": "1",
+                        "preExtrapolation": "0",
+                        "postExtrapolation": "0",
+                        "points": [
+                            {
+                                "point": {
+                                    "locked": "1",
+                                    "interpolation": "2",
+                                    "pcn": {
+                                        "xp": "-0.40000000000000002",
+                                        "yp": "1",
+                                        "x": "0",
+                                        "y": "1",
+                                        "xn": "0.40000000000000002",
+                                        "yn": "1"
+                                    }
+                                }
+                            },
+                            {
+                                "point": {
+                                    "locked": "1",
+                                    "interpolation": "2",
+                                    "pcn": {
+                                        "xp": "0.59999999999999998",
+                                        "yp": "0",
+                                        "x": "1",
+                                        "y": "0",
+                                        "xn": "1.3999999999999999",
+                                        "yn": "0"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "portName": "step_spacing",
+                    "portDirection": "input",
+                    "portType": "float",
+                    "portDefault": "0.200000003f",
+                    "metadata": [
+                        {
+                            "metaName": "UiSoftMin",
+                            "metaType": "string",
+                            "metaValue": "0.01"
+                        },
+                        {
+                            "metaName": "UiSoftMax",
+                            "metaType": "string",
+                            "metaValue": "1"
+                        }
+                    ]
+                },
+                {
+                    "portName": "radius_override",
+                    "portDirection": "input",
+                    "portType": "float",
+                    "portDefault": "0f"
+                },
+                {
+                    "portName": "remap_pressure",
+                    "portDirection": "input",
+                    "portType": "Math::float2",
+                    "portDefault": {
+                        "x": "0f",
+                        "y": "1f"
+                    },
+                    "metadata": [
+                        {
+                            "metaName": "UiSoftMin",
+                            "metaType": "string",
+                            "metaValue": "0"
+                        },
+                        {
+                            "metaName": "UiSoftMax",
+                            "metaType": "string",
+                            "metaValue": "1"
+                        }
+                    ]
+                },
+                {
+                    "portName": "color",
+                    "portDirection": "input",
+                    "portType": "Math::float4",
+                    "portDefault": {
+                        "x": "1f",
+                        "y": "1f",
+                        "z": "1f",
+                        "w": "1f"
+                    },
+                    "metadata": [
+                        {
+                            "metaName": "UIWidget",
+                            "metaType": "string",
+                            "metaValue": "ColorPicker"
+                        }
+                    ]
+                },
+                {
+                    "portName": "stroke_step",
+                    "portDirection": "output",
+                    "portType": "BEP::paintfrost::stroke_step"
+                }
+            ],
+            "compoundNodes": [
+                {
+                    "nodeName": "value",
+                    "valueType": "Math::float3x3",
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "valuenode_defaultvalue",
+                            "metaType": "string",
+                            "metaValue": "0"
+                        },
+                        {
+                            "metaName": "valuenode_defaultvalue",
+                            "metaType": "string",
+                            "metaValue": "0"
+                        },
+                        {
+                            "metaName": "valuenode_defaultvalue",
+                            "metaType": "string",
+                            "metaValue": "0"
+                        },
+                        {
+                            "metaName": "valuenode_defaultvalue",
+                            "metaType": "string",
+                            "metaValue": "0"
+                        },
+                        {
+                            "metaName": "valuenode_defaultvalue",
+                            "metaType": "string",
+                            "metaValue": "0"
+                        },
+                        {
+                            "metaName": "valuenode_defaultvalue",
+                            "metaType": "string",
+                            "metaValue": "0"
+                        },
+                        {
+                            "metaName": "valuenode_defaultvalue",
+                            "metaType": "string",
+                            "metaValue": "0"
+                        },
+                        {
+                            "metaName": "valuenode_defaultvalue",
+                            "metaType": "string",
+                            "metaValue": "0"
+                        },
+                        {
+                            "metaName": "valuenode_defaultvalue",
+                            "metaType": "string",
+                            "metaValue": "0"
+                        },
+                        {
+                            "metaName": "PortExpandedState",
+                            "metadata": [
+                                {
+                                    "metaName": "output",
+                                    "metaType": "string",
+                                    "metaValue": "1"
+                                },
+                                {
+                                    "metaName": "output.c3",
+                                    "metaType": "string",
+                                    "metaValue": "0"
+                                },
+                                {
+                                    "metaName": "output.c1",
+                                    "metaType": "string",
+                                    "metaValue": "0"
+                                },
+                                {
+                                    "metaName": "output.c0",
+                                    "metaType": "string",
+                                    "metaValue": "0"
+                                }
+                            ]
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "-1101.61 -1218.2"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "value3",
+                    "valueType": "BEP::paintfrost::stroke_step",
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "-48.6624 -1054.62"
+                        },
+                        {
+                            "metaName": "PortExpandedState",
+                            "metadata": [
+                                {
+                                    "metaName": "value.tablet.tilt",
+                                    "metaType": "string",
+                                    "metaValue": "0"
+                                },
+                                {
+                                    "metaName": "value",
+                                    "metaType": "string",
+                                    "metaValue": "1"
+                                },
+                                {
+                                    "metaName": "value.stats",
+                                    "metaType": "string",
+                                    "metaValue": "0"
+                                },
+                                {
+                                    "metaName": "value.brush",
+                                    "metaType": "string",
+                                    "metaValue": "1"
+                                },
+                                {
+                                    "metaName": "value.tablet",
+                                    "metaType": "string",
+                                    "metaValue": "0"
+                                },
+                                {
+                                    "metaName": "output",
+                                    "metaType": "string",
+                                    "metaValue": "1"
+                                },
+                                {
+                                    "metaName": "output.brush",
+                                    "metaType": "string",
+                                    "metaValue": "0"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "to_unsigned_int",
+                    "nodeType": "Core::Type_Conversion::to_unsigned_int",
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "-412.742 -1306.43"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "vector2_to_scalar",
+                    "nodeType": "Core::Conversion::vector2_to_scalar",
+                    "metadata": [
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "-873 -932"
+                        },
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "lerp",
+                    "nodeType": "Core::Math::lerp",
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "-520.731 -682.988"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "value4",
+                    "valueType": "BEP::paintfrost::tablet",
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "valuenode_defaultvalue",
+                            "metaType": "string",
+                            "metaValue": "0"
+                        },
+                        {
+                            "metaName": "valuenode_defaultvalue",
+                            "metaType": "string",
+                            "metaValue": "0"
+                        },
+                        {
+                            "metaName": "valuenode_defaultvalue",
+                            "metaType": "string",
+                            "metaValue": "0"
+                        },
+                        {
+                            "metaName": "valuenode_defaultvalue",
+                            "metaType": "string",
+                            "metaValue": "0"
+                        },
+                        {
+                            "metaName": "PortExpandedState",
+                            "metadata": [
+                                {
+                                    "metaName": "output",
+                                    "metaType": "string",
+                                    "metaValue": "0"
+                                }
+                            ]
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "-760.263 -490.815"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "vector2_to_scalar1",
+                    "nodeType": "Core::Conversion::vector2_to_scalar",
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "-761.008 -659.487"
+                        }
+                    ]
+                }
+            ],
+            "connections": [
+                {
+                    "source": "value.output.c0.y",
+                    "target": "to_unsigned_int.from"
+                },
+                {
+                    "source": "value.output.c1",
+                    "target": "value3.value.position"
+                },
+                {
+                    "source": "value.output.c2",
+                    "target": "value3.value.direction"
+                },
+                {
+                    "source": "value3.output",
+                    "target": ".stroke_step"
+                },
+                {
+                    "source": ".stroke_data",
+                    "target": "value.value"
+                },
+                {
+                    "source": ".tablet_data",
+                    "target": "value3.value.tablet"
+                },
+                {
+                    "source": ".profile",
+                    "target": "value3.value.brush.profile"
+                },
+                {
+                    "source": "to_unsigned_int.unsigned_int",
+                    "target": "value3.value.stats.modifiers"
+                },
+                {
+                    "source": "value.output.c0.x",
+                    "target": "value3.value.stats.time"
+                },
+                {
+                    "source": ".painting",
+                    "target": "value3.value.stats.painting"
+                },
+                {
+                    "source": ".flood",
+                    "target": "value3.value.stats.flood"
+                },
+                {
+                    "source": ".brush_data",
+                    "target": "vector2_to_scalar.vector2"
+                },
+                {
+                    "source": "vector2_to_scalar.x",
+                    "target": "value3.value.brush.radius"
+                },
+                {
+                    "source": "vector2_to_scalar.y",
+                    "target": "value3.value.brush.value"
+                },
+                {
+                    "source": ".color",
+                    "target": "value3.value.brush.color"
+                },
+                {
+                    "source": ".tablet_data",
+                    "target": "value4.value"
+                },
+                {
+                    "source": "value4.output.pressure",
+                    "target": "lerp.fraction"
+                },
+                {
+                    "source": "vector2_to_scalar1.x",
+                    "target": "lerp.first"
+                },
+                {
+                    "source": "vector2_to_scalar1.y",
+                    "target": "lerp.second"
+                },
+                {
+                    "source": ".remap_pressure",
+                    "target": "vector2_to_scalar1.vector2"
+                },
+                {
+                    "source": "lerp.interpolated",
+                    "target": "value3.value.tablet.pressure"
+                }
+            ],
+            "values": [
+                {
+                    "valueName": "value.value",
+                    "valueType": "Math::float3x3",
+                    "value": {
+                        "c0": {
+                            "x": "0f",
+                            "y": "0f",
+                            "z": "0f"
+                        },
+                        "c1": {
+                            "x": "0f",
+                            "y": "0f",
+                            "z": "0f"
+                        },
+                        "c2": {
+                            "x": "0f",
+                            "y": "0f",
+                            "z": "0f"
+                        }
+                    }
+                },
+                {
+                    "valueName": "value4.value",
+                    "valueType": "BEP::paintfrost::tablet",
+                    "value": {
+                        "pressure": "0f",
+                        "tilt": {
+                            "x": "0f",
+                            "y": "0f"
+                        },
+                        "eraser": "false"
+                    }
+                }
+            ],
+            "reservedNodeNames": [
+                {
+                    "name": "input"
+                },
+                {
+                    "name": "input1"
+                },
+                {
+                    "name": "output"
+                }
+            ]
+        }
+    ]
+}

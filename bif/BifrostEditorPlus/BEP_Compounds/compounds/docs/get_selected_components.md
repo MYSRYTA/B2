@@ -1,0 +1,1 @@
+Returns the currently selected components as an array of component indicies. In the case of edges the return type is a 2d vector representing the start and end vertex ids for that edge.

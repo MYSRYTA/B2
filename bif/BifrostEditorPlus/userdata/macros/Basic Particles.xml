@@ -1,0 +1,184 @@
+
+<sub_root>
+    <nodes>
+        <node>
+            <vnnNode name="simulate_particles" type="BifrostGraph,Simulation::Particles,simulate_particles" flag="0">
+    <metadatas>
+    <metadata name="DisplayMode">
+        <value>2</value>
+    </metadata>
+    <metadata name="LayoutPos">
+        <value>-40.119 -234.796</value>
+    </metadata>
+    <metadata name="terminal_node_disabled_flags">
+        <value>[
+    {
+        &quot;enabled&quot;: false,
+        &quot;name&quot;: &quot;Core::Graph::terminal::final&quot;
+    },
+    {
+        &quot;enabled&quot;: false,
+        &quot;name&quot;: &quot;Core::Graph::terminal::proxy&quot;
+    },
+    {
+        &quot;enabled&quot;: false,
+        &quot;name&quot;: &quot;Core::Graph::terminal::diagnostic&quot;
+    }
+]
+</value>
+    </metadata>
+</metadatas>
+    <ports>
+        <port name="sources" type="array&lt;Object&gt;" flag="2" is_input="yes" is_fan_in="yes">
+            <metadatas>
+                <metadata name="quick_create" value="Simulation::Particles::source_particles"/>
+            </metadatas>
+            <ports>
+                <port name="particle_source" type="array&lt;Object&gt;" flag="0" is_input="yes">
+                    <metadatas>
+                        <metadata name="quick_create" value="Simulation::Particles::source_particles"/>
+                    </metadatas>
+                </port>
+            </ports>
+        </port>
+        <port name="colliders" type="array&lt;Object&gt;" flag="2" is_input="yes" is_fan_in="yes">
+            <metadatas>
+                <metadata name="quick_create" value="Simulation::Common::collider"/>
+            </metadatas>
+            <ports>
+                <port name="collider" type="array&lt;Object&gt;" flag="0" is_input="yes">
+                    <metadatas>
+                        <metadata name="quick_create" value="Simulation::Common::collider"/>
+                    </metadatas>
+                </port>
+            </ports>
+        </port>
+        <port name="influences" type="array&lt;Object&gt;" flag="2" is_input="yes" is_fan_in="yes">
+            <metadatas>
+                <metadata name="quick_create" value="Simulation::Influence::dissipation_influence;Simulation::Influence::modifier_influence;Simulation::Influence::modulate_influence;Simulation::Influence::turbulence_influence;Simulation::Influence::wind_influence"/>
+            </metadatas>
+        </port>
+        <port name="settings" type="Object" flag="0" is_input="yes">
+            <metadatas>
+                <metadata name="quick_create" value="Simulation::Particles::particle_solver_settings"/>
+            </metadatas>
+        </port>
+        <port name="particles" type="Object" flag="0" is_input="no"/>
+        <port name="killed_particles" type="Object" flag="0" is_input="no"/>
+    </ports>
+</vnnNode>
+        </node>
+        <node>
+            <vnnNode name="source_particles" type="BifrostGraph,Simulation::Particles,source_particles" flag="0">
+    <metadatas>
+    <metadata name="DisplayMode">
+        <value>2</value>
+    </metadata>
+    <metadata name="LayoutPos">
+        <value>-368.119 -446.796</value>
+    </metadata>
+</metadatas>
+    <ports>
+        <port name="geometry" type="array&lt;Object&gt;" flag="2" is_input="yes" is_fan_in="yes"/>
+        <port name="enable" type="bool" flag="0" is_input="yes" default_values="1"/>
+        <port name="start_frame" type="float" flag="0" is_input="yes" default_values="1"/>
+        <port name="use_end_frame" type="bool" flag="0" is_input="yes" default_values="0"/>
+        <port name="end_frame" type="float" flag="0" is_input="yes" default_values="24"/>
+        <port name="distribution" type="Simulation::Distribution_Type" flag="0" is_input="yes" default_values="0"/>
+        <port name="volume_detail_size" type="float" flag="0" is_input="yes" default_values="0.05"/>
+        <port name="rate" type="float" flag="4096" is_input="yes" default_values="100"/>
+        <port name="rate_mode" type="Simulation::Emit_Rate_Type" flag="0" is_input="yes" default_values="1"/>
+        <port name="speed" type="float" flag="4096" is_input="yes" default_values="2"/>
+        <port name="direction" type="Math::float3" flag="4096" is_input="yes" default_values="0;0;0"/>
+        <port name="normal_speed" type="float" flag="4096" is_input="yes" default_values="1"/>
+        <port name="spread" type="float" flag="4096" is_input="yes" default_values="0"/>
+        <port name="inherit_velocity" type="float" flag="4096" is_input="yes" default_values="0"/>
+        <port name="bounciness" type="float" flag="4096" is_input="yes" default_values="0.5"/>
+        <port name="live_forever" type="bool" flag="0" is_input="yes" default_values="0"/>
+        <port name="age_limit" type="float" flag="4096" is_input="yes" default_values="2"/>
+        <port name="size" type="float" flag="4096" is_input="yes" default_values="0.1"/>
+        <port name="additional_properties" type="array&lt;Object&gt;" flag="2" is_input="yes" is_fan_in="yes">
+            <metadatas>
+                <metadata name="quick_create" value="Core::Object::set_property;Simulation::Particles::source_particle_rotations;Simulation::Common::source_color_property"/>
+            </metadatas>
+        </port>
+        <port name="particle_source" type="array&lt;Object&gt;" flag="4096" is_input="no"/>
+    </ports>
+</vnnNode>
+        </node>
+        <node>
+            <vnnNode name="collider" type="BifrostGraph,Simulation::Common,collider" flag="0">
+    <metadatas>
+    <metadata name="DisplayMode">
+        <value>2</value>
+    </metadata>
+    <metadata name="LayoutPos">
+        <value>-368.119 -155.796</value>
+    </metadata>
+</metadatas>
+    <ports>
+        <port name="geometry" type="array&lt;Object&gt;" flag="2" is_input="yes" is_fan_in="yes"/>
+        <port name="enable" type="bool" flag="0" is_input="yes" default_values="1"/>
+        <port name="method" type="Simulation::Collide_Type" flag="0" is_input="yes"/>
+        <port name="start_frame" type="float" flag="0" is_input="yes" default_values="1"/>
+        <port name="use_end_frame" type="bool" flag="0" is_input="yes"/>
+        <port name="end_frame" type="float" flag="0" is_input="yes" default_values="1"/>
+        <port name="detail_size" type="float" flag="0" is_input="yes" default_values="0.05"/>
+        <port name="offset" type="float" flag="0" is_input="yes"/>
+        <port name="inherit_velocity" type="float" flag="0" is_input="yes" default_values="1"/>
+        <port name="resolution_mode" type="Geometry::Volume::ResolutionType" flag="0" is_input="yes" default_values="1"/>
+        <port name="geo_mode" type="Geometry::Converters::VolumeMode" flag="0" is_input="yes"/>
+        <port name="min_hole_radius" type="float" flag="0" is_input="yes"/>
+        <port name="optimal_adaptivity" type="bool" flag="0" is_input="yes"/>
+        <port name="bounciness" type="float" flag="4096" is_input="yes" default_values="1"/>
+        <port name="friction" type="float" flag="4096" is_input="yes" default_values="0.5"/>
+        <port name="roughness" type="float" flag="4096" is_input="yes" default_values="0"/>
+        <port name="display_diagnostic" type="bool" flag="0" is_input="yes" default_values="0"/>
+        <port name="collider" type="array&lt;Object&gt;" flag="0" is_input="no"/>
+    </ports>
+</vnnNode>
+        </node>
+        <node>
+            <vnnNode name="particle_solver_settings" type="BifrostGraph,Simulation::Particles,particle_solver_settings" flag="0">
+    <metadatas>
+    <metadata name="DisplayMode">
+        <value>2</value>
+    </metadata>
+    <metadata name="LayoutPos">
+        <value>-368.119 135.204</value>
+    </metadata>
+</metadatas>
+    <ports>
+        <port name="use_master_start_frame" type="bool" flag="0" is_input="yes"/>
+        <port name="master_start_frame" type="float" flag="0" is_input="yes" default_values="1"/>
+        <port name="gravity" type="bool" flag="0" is_input="yes" default_values="1"/>
+        <port name="gravity_vector" type="Math::float3" flag="0" is_input="yes" default_values="0;-9.8;0"/>
+        <port name="substeps" type="int" flag="0" is_input="yes" default_values="1"/>
+        <port name="simulation_speed" type="float" flag="0" is_input="yes" default_values="1"/>
+        <port name="shape" type="Geometry::PointShapes" flag="0" is_input="yes" default_values="5"/>
+        <port name="numeric_property" type="string" flag="0" is_input="yes" default_values="point_position"/>
+        <port name="face_camera" type="bool" flag="0" is_input="yes" default_values="0"/>
+        <port name="simulation_bounds" type="Object" flag="0" is_input="yes"/>
+        <port name="self_collisions" type="bool" flag="0" is_input="yes" default_values="0"/>
+        <port name="spin_on_collision" type="bool" flag="0" is_input="yes" default_values="0"/>
+        <port name="collision_spin" type="float" flag="0" is_input="yes" default_values="0.3"/>
+        <port name="viscosity" type="float" flag="0" is_input="yes"/>
+        <port name="label_point_id" type="bool" flag="0" is_input="yes" default_values="1"/>
+        <port name="additional_settings" type="array&lt;Object&gt;" flag="2" is_input="yes" is_fan_in="yes">
+            <metadatas>
+                <metadata name="quick_create" value="Simulation::Common::set_initial_state"/>
+            </metadatas>
+        </port>
+        <port name="store_self_collisions" type="bool" flag="0" is_input="yes" default_values="0"/>
+        <port name="store_surface_collisions" type="bool" flag="0" is_input="yes" default_values="0"/>
+        <port name="solver_settings" type="Object" flag="0" is_input="no"/>
+    </ports>
+</vnnNode>
+        </node>
+    </nodes>
+    <connections>
+        <connection output_port="source_particles.particle_source" input_port="simulate_particles.sources.particle_source"/>
+        <connection output_port="collider.collider" input_port="simulate_particles.colliders.collider"/>
+        <connection output_port="particle_solver_settings.solver_settings" input_port="simulate_particles.settings"/>
+    </connections>
+</sub_root>

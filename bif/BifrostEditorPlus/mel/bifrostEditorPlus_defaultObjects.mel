@@ -1,0 +1,188 @@
+global proc string[] BEP_createPosition()
+{
+	string $parent = `createNode -n "bifCtrl" "transform"`;
+		setAttr ".displayHandle" 1;
+		setAttr ".ove" yes;
+		setAttr ".ovrgbf" yes;
+		vector $color = `hsv_to_rgb <<rand(1),rand(0.75,1), 1>>`;
+		$color = $color * 1.5;
+		float $colorR;
+		float $colorG;
+		float $colorB;
+		$colorR = $color.x;
+		$colorG = $color.y;
+		$colorB = $color.z;
+		setAttr ".ovrgb" -type "float3" $colorR $colorG $colorB;
+
+	string $loc = `createNode locator -n ($parent + "Shape") -p $parent`;
+	setAttr -k off ".v" false;
+
+	select $parent;
+	return {$parent, $loc};
+}
+
+
+global proc string BEP_createTransform()
+{
+	string $parent = `createNode -n "bifCtrl" "transform"`;
+		setAttr ".displayHandle" 1;
+		setAttr ".ove" yes;
+		setAttr ".ovrgbf" yes;
+		vector $color = `hsv_to_rgb <<rand(1),rand(0.75,1), 1>>`;
+		$color = $color * 1.5;
+		float $colorR;
+		float $colorG;
+		float $colorB;
+		$colorR = $color.x;
+		$colorG = $color.y;
+		$colorB = $color.z;
+		setAttr ".ovrgb" -type "float3" $colorR $colorG $colorB;
+
+	createNode nurbsCurve -p $parent;
+		setAttr -k off ".v";
+		setAttr ".ove" yes;
+		setAttr ".ovrgbf" yes;
+		setAttr ".lineWidth" 2;
+		setAttr ".ovrgb" -type "float3" $colorR $colorG $colorB;
+		setAttr ".cc" -type "nurbsCurve" 
+			1 7 0 no 3
+			8 0 1 2 3 4 5 6 7
+			8
+			0 0 1
+			0 0 -1
+			0 0 0
+			-1 0 0
+			1 0 0
+			0 0 0
+			0 1 0
+			0 -1 0
+			;
+
+
+	createNode nurbsCurve -p $parent;
+		setAttr -k off ".v";
+		setAttr ".ove" yes;
+		setAttr ".ovc" 13;
+		setAttr ".cc" -type "nurbsCurve" 
+			1 6 0 no 3
+			7 0 1 2 3 4 5 6
+			7
+			.5 0 .5
+			1 0 0
+			0.5 0 -0.5
+			1 0 0
+			0.5 -0.5 0
+			1 0 0
+			0.5 0.5 0
+			;
+
+	createNode nurbsCurve -p $parent;
+		setAttr -k off ".v";
+		setAttr ".ove" yes;
+		setAttr ".ovc" 14;
+		setAttr ".cc" -type "nurbsCurve" 
+			1 6 0 no 3
+			7 0 1 2 3 4 5 6
+			7
+			0 0.5 0.5
+			0 1 0
+			0 0.5 -0.5
+			0 1 0
+			0.5 0.5 0
+			0 1 0
+			-0.5 0.5 0
+			;
+	createNode nurbsCurve -p $parent;
+		setAttr -k off ".v";
+		setAttr ".ove" yes;
+		setAttr ".ovc" 6;
+		setAttr ".cc" -type "nurbsCurve" 
+			1 6 0 no 3
+			7 0 1 2 3 4 5 6
+			7
+			0.5 0 0.5
+			0 0 1
+			-0.5 0 0.5
+			0 0 1
+			0 0.5 0.5
+			0 0 1
+			0 -0.5 0.5
+			;
+	createNode nurbsCurve -p $parent;
+		setAttr -k off ".v";
+		setAttr ".ove" yes;
+		setAttr ".ovrgbf" yes;
+		setAttr ".ovc" 4;
+		setAttr ".ovrgb" -type "float3" 0.5 0 0 ;
+		setAttr ".cc" -type "nurbsCurve" 
+			1 6 0 no 3
+			7 0 1 2 3 4 5 6
+			7
+			-0.5 0 0.5
+			-1 0 0
+			-0.5 0 -0.5
+			-1 0 0
+			-0.5 0.5 0
+			-1 0 0
+			-0.5 -0.5 0
+			;
+	createNode nurbsCurve -p $parent;
+		setAttr -k off ".v";
+		setAttr ".ove" yes;
+		setAttr ".ovrgbf" yes;
+		setAttr ".ovc" 23;
+		setAttr ".ovrgb" -type "float3" 0 0.5 0 ;
+		setAttr ".cc" -type "nurbsCurve" 
+			1 6 0 no 3
+			7 0 1 2 3 4 5 6
+			7
+			0 -0.5 0.5
+			0 -1 0
+			0 -0.5 -0.5
+			0 -1 0
+			-0.5 -0.5 0
+			0 -1 0
+			0.5 -0.5 0
+			;
+	createNode nurbsCurve -p $parent;
+		setAttr -k off ".v";
+		setAttr ".ove" yes;
+		setAttr ".ovrgbf" yes;
+		setAttr ".ovc" 15;
+		setAttr ".ovrgb" -type "float3" 0 0 0.5 ;
+		setAttr ".cc" -type "nurbsCurve" 
+			1 6 0 no 3
+			7 0 1 2 3 4 5 6
+			7
+			0.5 0 -0.5
+			0 0 -1
+			-0.5 0 -0.5
+			0 0 -1
+			0 -0.5 -0.5
+			0 0 -1
+			0 0.5 -0.5
+			;
+	select $parent;
+	return $parent;
+}
+
+global proc string BEP_createDefaultCurve()
+{
+	string $curve = `createNode nurbsCurve`;
+	setAttr -k off ".v";
+	setAttr ".cc" -type "nurbsCurve" 
+		3 5 0 no 3
+		10 0 0 0 1 2 3 4 5 5 5
+		8
+		0 0 0
+		-2.1866028708134508 1.1084529505582426 -2.2280425328727755
+		-6.5598086124403183 3.3253588516747099 2.653746723650543
+		8.239234449760831 4.6985645933013842 4.0665303046126846
+		-6.8923717219368692 8.5743744219407532 -5.4041656570042171
+		7.349282296650764 11.779904306220082 -1.5871475633924046
+		0.44976076555025646 15.259968102073335 4.3128791761794449
+		-2.9999999999999947 16.999999999999972 0
+		;
+	select $curve;
+	return $curve;
+}

@@ -1,0 +1,828 @@
+{
+    "header": {
+        "metadata": [
+            {
+                "metaName": "adskFileFormatVersion",
+                "metaValue": "100L"
+            }
+        ]
+    },
+    "namespaces": [],
+    "types": [],
+    "compounds": [
+        {
+            "name": "BEP::scene_data",
+            "uriImported": "file:///scene_data.json",
+            "metadata": [
+                {
+                    "metaName": "documentation",
+                    "metaType": "string",
+                    "metaValue": "docs/scene_data.md"
+                },
+                {
+                    "metaName": "icon",
+                    "metaType": "string",
+                    "metaValue": "icons/BEP.png"
+                },
+                {
+                    "metaName": "io_nodes",
+                    "metadata": [
+                        {
+                            "metaName": "io_inodes",
+                            "metadata": [
+                                {
+                                    "metaName": "input",
+                                    "metadata": [
+                                        {
+                                            "metaName": "DisplayMode",
+                                            "metaType": "string",
+                                            "metaValue": "2"
+                                        },
+                                        {
+                                            "metaName": "LayoutPos",
+                                            "metaType": "string",
+                                            "metaValue": "-1677.23 -24.0965"
+                                        },
+                                        {
+                                            "metaName": "io_ports",
+                                            "metadata": [
+                                                {
+                                                    "metaName": "input"
+                                                },
+                                                {
+                                                    "metaName": "filename"
+                                                },
+                                                {
+                                                    "metaName": "key"
+                                                },
+                                                {
+                                                    "metaName": "mode"
+                                                },
+                                                {
+                                                    "metaName": "reload"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "metaName": "io_onodes",
+                            "metadata": [
+                                {
+                                    "metaName": "output",
+                                    "metadata": [
+                                        {
+                                            "metaName": "DisplayMode",
+                                            "metaType": "string",
+                                            "metaValue": "2"
+                                        },
+                                        {
+                                            "metaName": "LayoutPos",
+                                            "metaType": "string",
+                                            "metaValue": "1646.92 -227.728"
+                                        },
+                                        {
+                                            "metaName": "io_ports",
+                                            "metadata": [
+                                                {
+                                                    "metaName": "output"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "metaName": "output1",
+                                    "metadata": [
+                                        {
+                                            "metaName": "DisplayMode",
+                                            "metaType": "string",
+                                            "metaValue": "2"
+                                        },
+                                        {
+                                            "metaName": "LayoutPos",
+                                            "metaType": "string",
+                                            "metaValue": "-491.335 446.352"
+                                        },
+                                        {
+                                            "metaName": "io_ports",
+                                            "metadata": [
+                                                {
+                                                    "metaName": "scene"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "metaName": "Set Path_script",
+                    "metaType": "string",
+                    "metaValue": "import time\nimport maya.cmds as mc\n\nscenename = mc.file(q=True, sn=True)[:-3]\nif scenename:\n    scenename += \".bob\"\n    mc.vnnNode(BifrostEditorPlus.currentGraph(), BifrostEditorPlus.currentNode(), spv=[\"filename\", scenename])\n    mc.vnnNode(BifrostEditorPlus.currentGraph(), BifrostEditorPlus.currentNode(), spv=[\"key\", int(time.time())])"
+                },
+                {
+                    "metaName": "Save_script",
+                    "metaType": "string",
+                    "metaValue": "import maya.cmds as mc\nmc.vnnNode(BifrostEditorPlus.currentGraph(), BifrostEditorPlus.currentNode(), spv=[\"mode\", 2])\nmc.evalDeferred('mc.evalDeferred(\\'mc.vnnNode(BifrostEditorPlus.currentGraph(), BifrostEditorPlus.currentNode(), spv=[\"mode\", 3])\\')')"
+                },
+                {
+                    "metaName": "Load_script",
+                    "metaType": "string",
+                    "metaValue": "import maya.cmds as mc\nmc.vnnNode(BifrostEditorPlus.currentGraph(), BifrostEditorPlus.currentNode(), spv=[\"mode\", 1])\nmc.vnnNode(BifrostEditorPlus.currentGraph(), BifrostEditorPlus.currentNode(), spv=[\"reload\", 1])\nmc.evalDeferred('mc.evalDeferred(\\'mc.vnnNode(BifrostEditorPlus.currentGraph(), BifrostEditorPlus.currentNode(), spv=[\"reload\", 0])\\')')"
+                },
+                {
+                    "metaName": "scriptButtons",
+                    "metaType": "string",
+                    "metaValue": "Set Path;Save;Load"
+                },
+                {
+                    "metaName": "PortExpandedState",
+                    "metadata": [
+                        {
+                            "metaName": "Settings",
+                            "metaType": "string",
+                            "metaValue": "0"
+                        }
+                    ]
+                },
+                {
+                    "metaName": "_recentNode_",
+                    "metaType": "string",
+                    "metaValue": "BifrostGraph,Core::Logic,if"
+                },
+                {
+                    "metaName": "_recentNode_",
+                    "metaType": "string",
+                    "metaValue": "BifrostGraph,Core::Logic,equal"
+                },
+                {
+                    "metaName": "_recentNode_",
+                    "metaType": "string",
+                    "metaValue": "BifrostGraph,Simulation::Common,file_cache"
+                },
+                {
+                    "metaName": "_recentNode_",
+                    "metaType": "string",
+                    "metaValue": "BifrostGraph,Core::Object,is_empty"
+                },
+                {
+                    "metaName": "_recentNode_",
+                    "metaType": "string",
+                    "metaValue": "BifrostGraph,Core::Array,first_in_array"
+                },
+                {
+                    "metaName": "UILayout",
+                    "metaType": "string",
+                    "metaValue": "{\n    \"NodeLayout\": {\n        \"hideUndeclaredPorts\": false,\n        \"items\": [\n            {\n                \"port\": \"input\"\n            },\n            {\n                \"expanded\": false,\n                \"group\": \"Settings\",\n                \"items\": [\n                    {\n                        \"port\": \"filename\"\n                    },\n                    {\n                        \"port\": \"key\"\n                    },\n                    {\n                        \"port\": \"mode\"\n                    },\n                    {\n                        \"port\": \"reload\"\n                    },\n                    {\n                        \"port\": \"return_scene\"\n                    }\n                ]\n            }\n        ]\n    }\n}\n"
+                },
+                {
+                    "metaName": "ViewportRect",
+                    "metaType": "string",
+                    "metaValue": "-1865 -677 1358 1248"
+                },
+                {
+                    "metaName": "DisplayMode",
+                    "metaType": "string",
+                    "metaValue": "2"
+                },
+                {
+                    "metaName": "LayoutPos",
+                    "metaType": "string",
+                    "metaValue": "1221.48 -465.759"
+                }
+            ],
+            "ports": [
+                {
+                    "portName": "input",
+                    "portDirection": "input"
+                },
+                {
+                    "portName": "filename",
+                    "portDirection": "input",
+                    "portType": "string",
+                    "portDefault": "",
+                    "metadata": [
+                        {
+                            "metaName": "UIWidget",
+                            "metaType": "string",
+                            "metaValue": "FileBrowserWidget"
+                        },
+                        {
+                            "metaName": "UIWidgetProp",
+                            "metaType": "string",
+                            "metaValue": "browserMode=save;filter=\"Object (*.bob);;All (*.*)\""
+                        }
+                    ]
+                },
+                {
+                    "portName": "key",
+                    "portDirection": "input",
+                    "portType": "string",
+                    "portDefault": ""
+                },
+                {
+                    "portName": "mode",
+                    "portDirection": "input",
+                    "portType": "Simulation::Common::file_cache_mode",
+                    "portDefault": "Passthrough Mode"
+                },
+                {
+                    "portName": "reload",
+                    "portDirection": "input",
+                    "portType": "bool",
+                    "portDefault": "false"
+                },
+                {
+                    "portName": "output",
+                    "portDirection": "output"
+                },
+                {
+                    "portName": "scene",
+                    "portDirection": "output",
+                    "portType": "Object"
+                }
+            ],
+            "compounds": [
+                {
+                    "name": "compound",
+                    "uriImported": "file:///scene_data.json",
+                    "metadata": [
+                        {
+                            "metaName": "io_nodes",
+                            "metadata": [
+                                {
+                                    "metaName": "io_inodes",
+                                    "metadata": [
+                                        {
+                                            "metaName": "input",
+                                            "metadata": [
+                                                {
+                                                    "metaName": "DisplayMode",
+                                                    "metaType": "string",
+                                                    "metaValue": "2"
+                                                },
+                                                {
+                                                    "metaName": "LayoutPos",
+                                                    "metaType": "string",
+                                                    "metaValue": "-1174 -61"
+                                                },
+                                                {
+                                                    "metaName": "io_ports",
+                                                    "metadata": [
+                                                        {
+                                                            "metaName": "reload"
+                                                        },
+                                                        {
+                                                            "metaName": "loaded"
+                                                        },
+                                                        {
+                                                            "metaName": "cached"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "metaName": "io_onodes",
+                                    "metadata": [
+                                        {
+                                            "metaName": "output",
+                                            "metadata": [
+                                                {
+                                                    "metaName": "DisplayMode",
+                                                    "metaType": "string",
+                                                    "metaValue": "2"
+                                                },
+                                                {
+                                                    "metaName": "LayoutPos",
+                                                    "metaType": "string",
+                                                    "metaValue": "949 -61"
+                                                },
+                                                {
+                                                    "metaName": "io_ports",
+                                                    "metadata": [
+                                                        {
+                                                            "metaName": "out"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "metaName": "ViewportRect",
+                            "metaType": "string",
+                            "metaValue": "-1399 -339 2798 678"
+                        },
+                        {
+                            "metaName": "_recentNode_",
+                            "metaType": "string",
+                            "metaValue": "BifrostGraph,Core::Logic,if"
+                        },
+                        {
+                            "metaName": "_recentNode_",
+                            "metaType": "string",
+                            "metaValue": "BifrostGraph,Core::Array,first_in_array"
+                        },
+                        {
+                            "metaName": "_recentNode_",
+                            "metaType": "string",
+                            "metaValue": "BifrostGraph,File::Geometry,read_Bifrost_object"
+                        },
+                        {
+                            "metaName": "_recentNode_",
+                            "metaType": "string",
+                            "metaValue": "BifrostGraph,File::Geometry,write_Alembic"
+                        },
+                        {
+                            "metaName": "_recentNode_",
+                            "metaType": "string",
+                            "metaValue": "BifrostGraph,Simulation::Common,file_cache"
+                        }
+                    ],
+                    "ports": [
+                        {
+                            "portName": "reload",
+                            "portDirection": "input",
+                            "portType": "bool"
+                        },
+                        {
+                            "portName": "loaded",
+                            "portDirection": "input"
+                        },
+                        {
+                            "portName": "out",
+                            "portDirection": "output"
+                        },
+                        {
+                            "portName": "cached",
+                            "portDirection": "input",
+                            "linkedFeedbackPort": "out"
+                        }
+                    ],
+                    "compoundNodes": [
+                        {
+                            "nodeName": "if",
+                            "nodeType": "Core::Logic::if",
+                            "metadata": [
+                                {
+                                    "metaName": "DisplayMode",
+                                    "metaType": "string",
+                                    "metaValue": "2"
+                                },
+                                {
+                                    "metaName": "LayoutPos",
+                                    "metaType": "string",
+                                    "metaValue": "-180.5 -104"
+                                }
+                            ]
+                        }
+                    ],
+                    "connections": [
+                        {
+                            "source": ".loaded",
+                            "target": "if.true_case"
+                        },
+                        {
+                            "source": "if.output",
+                            "target": ".out"
+                        },
+                        {
+                            "source": ".cached",
+                            "target": "if.false_case"
+                        },
+                        {
+                            "source": ".reload",
+                            "target": "if.condition"
+                        }
+                    ],
+                    "values": [],
+                    "reservedNodeNames": [
+                        {
+                            "name": "input"
+                        },
+                        {
+                            "name": "output"
+                        }
+                    ]
+                }
+            ],
+            "compoundNodes": [
+                {
+                    "nodeName": "set_property",
+                    "nodeType": "Core::Object::set_property",
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "-499.635 -513.254"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "get_property",
+                    "nodeType": "Core::Object::get_property",
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "-267.515 224.631"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "write_Bifrost_object",
+                    "nodeType": "File::Geometry::write_Bifrost_object",
+                    "fanInPortNames": {
+                        "objects": [
+                            "out_object"
+                        ]
+                    },
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "-195.161 -559.265"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "read_Bifrost_object",
+                    "nodeType": "File::Geometry::read_Bifrost_object",
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "-1369.76 -530.213"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "first_in_array",
+                    "nodeType": "Core::Array::first_in_array",
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "-1113.92 -429.568"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "if",
+                    "nodeType": "Core::Logic::if",
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "-802.154 -515.509"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "first_in_array1",
+                    "nodeType": "Core::Array::first_in_array",
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "78.5898 -517.252"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "if1",
+                    "nodeType": "Core::Logic::if",
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "949.892 -155.213"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "read_Bifrost_object1",
+                    "nodeType": "File::Geometry::read_Bifrost_object",
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "-1138.94 215.923"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "first_in_array2",
+                    "nodeType": "Core::Array::first_in_array",
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "-822.011 204.648"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "compound",
+                    "nodeType": "compound",
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "350.005 79.8553"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "get_property1",
+                    "nodeType": "Core::Object::get_property",
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "404.208 -530.226"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "if2",
+                    "nodeType": "Core::Logic::if",
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "1260.12 -220.303"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "equal1",
+                    "nodeType": "Core::Logic::equal",
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "507.779 -281.769"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "equal2",
+                    "nodeType": "Core::Logic::equal",
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "516.585 -187.118"
+                        }
+                    ]
+                }
+            ],
+            "connections": [
+                {
+                    "source": ".input",
+                    "target": "set_property.value"
+                },
+                {
+                    "source": ".key",
+                    "target": "set_property.key"
+                },
+                {
+                    "source": ".key",
+                    "target": "get_property.key"
+                },
+                {
+                    "source": "set_property.out_object",
+                    "target": "write_Bifrost_object.objects.out_object"
+                },
+                {
+                    "source": ".filename",
+                    "target": "write_Bifrost_object.filename"
+                },
+                {
+                    "source": ".filename",
+                    "target": "read_Bifrost_object.filename"
+                },
+                {
+                    "source": "read_Bifrost_object.out_objects",
+                    "target": "first_in_array.array"
+                },
+                {
+                    "source": "read_Bifrost_object.success",
+                    "target": "if.condition"
+                },
+                {
+                    "source": "first_in_array.first",
+                    "target": "if.true_case"
+                },
+                {
+                    "source": "if.output",
+                    "target": "set_property.object"
+                },
+                {
+                    "source": "write_Bifrost_object.out_objects",
+                    "target": "first_in_array1.array"
+                },
+                {
+                    "source": ".filename",
+                    "target": "read_Bifrost_object1.filename"
+                },
+                {
+                    "source": "read_Bifrost_object1.out_objects",
+                    "target": "first_in_array2.array"
+                },
+                {
+                    "source": "first_in_array2.first",
+                    "target": "get_property.object"
+                },
+                {
+                    "source": ".input",
+                    "target": "get_property.default_and_type"
+                },
+                {
+                    "source": ".input",
+                    "target": "get_property1.default_and_type"
+                },
+                {
+                    "source": ".key",
+                    "target": "get_property1.key"
+                },
+                {
+                    "source": "first_in_array1.first",
+                    "target": "get_property1.object"
+                },
+                {
+                    "source": "if1.output",
+                    "target": "if2.false_case"
+                },
+                {
+                    "source": ".mode",
+                    "target": "equal1.first"
+                },
+                {
+                    "source": "equal1.output",
+                    "target": "if2.condition"
+                },
+                {
+                    "source": "get_property1.value",
+                    "target": "if2.true_case"
+                },
+                {
+                    "source": ".mode",
+                    "target": "equal2.first"
+                },
+                {
+                    "source": "equal2.output",
+                    "target": "if1.condition"
+                },
+                {
+                    "source": "compound.out",
+                    "target": "if1.true_case"
+                },
+                {
+                    "source": ".input",
+                    "target": "if1.false_case"
+                },
+                {
+                    "source": ".reload",
+                    "target": "compound.reload"
+                },
+                {
+                    "source": "if2.output",
+                    "target": ".output"
+                },
+                {
+                    "source": "get_property.value",
+                    "target": "compound.loaded"
+                },
+                {
+                    "source": "get_property.value",
+                    "target": "compound.cached"
+                },
+                {
+                    "source": "first_in_array2.first",
+                    "target": ".scene"
+                }
+            ],
+            "values": [
+                {
+                    "valueName": "write_Bifrost_object.create_directories",
+                    "valueType": "bool",
+                    "value": "true"
+                },
+                {
+                    "valueName": "compound.reload",
+                    "valueType": "bool",
+                    "value": "false"
+                },
+                {
+                    "valueName": "equal1.second",
+                    "valueType": "Simulation::Common::file_cache_mode",
+                    "value": "Write Mode"
+                },
+                {
+                    "valueName": "equal2.second",
+                    "valueType": "Simulation::Common::file_cache_mode",
+                    "value": "Read Mode"
+                }
+            ],
+            "reservedNodeNames": [
+                {
+                    "name": "input"
+                },
+                {
+                    "name": "output"
+                },
+                {
+                    "name": "output1"
+                }
+            ]
+        }
+    ]
+}

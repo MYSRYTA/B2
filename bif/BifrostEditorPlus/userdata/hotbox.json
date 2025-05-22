@@ -1,0 +1,15 @@
+{
+    "IO": {
+        "input": "::",
+        "output": "::",
+        "terminal": "Core::Graph"
+    },
+    "scatter_points": "Modeling::Points",
+    "Math": {
+        "add": "Core::Math",
+        "multiply": "Core::Math",
+        "subtract": "Core::Math",
+        "divide": "Core::Math"
+    },
+    "create_mesh_cube": "Modeling::Primitive"
+}

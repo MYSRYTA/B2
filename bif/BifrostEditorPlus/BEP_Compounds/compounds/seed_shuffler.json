@@ -1,0 +1,221 @@
+{
+    "header": {
+        "metadata": [
+            {
+                "metaName": "adskFileFormatVersion",
+                "metaValue": "100L"
+            }
+        ]
+    },
+    "namespaces": [],
+    "types": [],
+    "compounds": [
+        {
+            "name": "BEP::seed_shuffler",
+            "uriImported": "file:///seed_shuffler.json",
+            "metadata": [
+                {
+                    "metaName": "documentation",
+                    "metaType": "string",
+                    "metaValue": "docs/seed_shuffler.md"
+                },
+                {
+                    "metaName": "icon",
+                    "metaType": "string",
+                    "metaValue": "icons/BEP.png"
+                },
+                {
+                    "metaName": "io_nodes",
+                    "metadata": [
+                        {
+                            "metaName": "io_inodes",
+                            "metadata": [
+                                {
+                                    "metaName": "input",
+                                    "metadata": [
+                                        {
+                                            "metaName": "DisplayMode",
+                                            "metaType": "string",
+                                            "metaValue": "2"
+                                        },
+                                        {
+                                            "metaName": "LayoutPos",
+                                            "metaType": "string",
+                                            "metaValue": "-450 -61"
+                                        },
+                                        {
+                                            "metaName": "io_ports",
+                                            "metadata": [
+                                                {
+                                                    "metaName": "search_terms"
+                                                },
+                                                {
+                                                    "metaName": "exact_match"
+                                                },
+                                                {
+                                                    "metaName": "int_range"
+                                                },
+                                                {
+                                                    "metaName": "float_range"
+                                                },
+                                                {
+                                                    "metaName": "scope"
+                                                },
+                                                {
+                                                    "metaName": "int_types"
+                                                },
+                                                {
+                                                    "metaName": "float_types"
+                                                },
+                                                {
+                                                    "metaName": "float_precision"
+                                                },
+                                                {
+                                                    "metaName": "reset_feedback"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "metaName": "io_onodes",
+                            "metadata": [
+                                {
+                                    "metaName": "output",
+                                    "metadata": [
+                                        {
+                                            "metaName": "DisplayMode",
+                                            "metaType": "string",
+                                            "metaValue": "2"
+                                        },
+                                        {
+                                            "metaName": "LayoutPos",
+                                            "metaType": "string",
+                                            "metaValue": "225 -61"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "metaName": "ViewportRect",
+                    "metaType": "string",
+                    "metaValue": "-762.648 -681.727 1443.36 1300.65"
+                },
+                {
+                    "metaName": "DisplayMode",
+                    "metaType": "string",
+                    "metaValue": "2"
+                },
+                {
+                    "metaName": "LayoutPos",
+                    "metaType": "string",
+                    "metaValue": "-16 -151"
+                },
+                {
+                    "metaName": "UILayout",
+                    "metaType": "string",
+                    "metaValue": "{\n    \"NodeLayout\": {\n        \"hideUndeclaredPorts\": false,\n        \"items\": [\n            {\n                \"expanded\": false,\n                \"group\": \"Settings\",\n                \"items\": [\n                    {\n                        \"port\": \"scope\"\n                    },\n                    {\n                        \"port\": \"search_terms\"\n                    },\n                    {\n                        \"port\": \"exact_match\"\n                    },\n                    {\n                        \"port\": \"int_types\"\n                    },\n                    {\n                        \"port\": \"int_range\"\n                    },\n                    {\n                        \"port\": \"float_types\"\n                    },\n                    {\n                        \"port\": \"float_range\"\n                    },\n                    {\n                        \"port\": \"float_precision\"\n                    },\n                    {\n                        \"port\": \"reset_feedback\"\n                    }\n                ]\n            }\n        ]\n    }\n}\n"
+                },
+                {
+                    "metaName": "PortExpandedState",
+                    "metadata": [
+                        {
+                            "metaName": "Settings",
+                            "metaType": "string",
+                            "metaValue": "0"
+                        }
+                    ]
+                }
+            ],
+            "ports": [
+                {
+                    "portName": "search_terms",
+                    "portDirection": "input",
+                    "portType": "string",
+                    "portDefault": "seed"
+                },
+                {
+                    "portName": "exact_match",
+                    "portDirection": "input",
+                    "portType": "bool",
+                    "portDefault": "false"
+                },
+                {
+                    "portName": "int_range",
+                    "portDirection": "input",
+                    "portType": "Math::long2",
+                    "portDefault": {
+                        "x": "0",
+                        "y": "1000000"
+                    }
+                },
+                {
+                    "portName": "float_range",
+                    "portDirection": "input",
+                    "portType": "Math::float2",
+                    "portDefault": {
+                        "x": "0f",
+                        "y": "1f"
+                    }
+                },
+                {
+                    "portName": "scope",
+                    "portDirection": "input",
+                    "portType": "BEP::OperationScope",
+                    "portDefault": "Local"
+                },
+                {
+                    "portName": "int_types",
+                    "portDirection": "input",
+                    "portType": "bool",
+                    "portDefault": "true"
+                },
+                {
+                    "portName": "float_types",
+                    "portDirection": "input",
+                    "portType": "bool",
+                    "portDefault": "true"
+                },
+                {
+                    "portName": "float_precision",
+                    "portDirection": "input",
+                    "portType": "long",
+                    "portDefault": "3",
+                    "metadata": [
+                        {
+                            "metaName": "UiSoftMin",
+                            "metaType": "string",
+                            "metaValue": "0"
+                        },
+                        {
+                            "metaName": "UiSoftMax",
+                            "metaType": "string",
+                            "metaValue": "8"
+                        }
+                    ]
+                },
+                {
+                    "portName": "reset_feedback",
+                    "portDirection": "input",
+                    "portType": "bool",
+                    "portDefault": "false"
+                }
+            ],
+            "compoundNodes": [],
+            "connections": [],
+            "reservedNodeNames": [
+                {
+                    "name": "input"
+                },
+                {
+                    "name": "output"
+                }
+            ]
+        }
+    ]
+}

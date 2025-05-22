@@ -1,0 +1,30 @@
+{
+    "header": {
+        "metadata": [
+            {
+                "metaName": "adskFileFormatVersion",
+                "metaValue": "100L"
+            }
+        ]
+    },
+    "namespaces": [],
+    "types": [
+        {
+            "enumName": "BEP::OperationScope",
+            "enumMembers": [
+                {
+                    "enumKey": "Local",
+                    "enumValue": "0"
+                },
+                {
+                    "enumKey": "Local Recursive",
+                    "enumValue": "1"
+                },
+                {
+                    "enumKey": "Global",
+                    "enumValue": "2"
+                }
+            ]
+        }
+    ]
+}

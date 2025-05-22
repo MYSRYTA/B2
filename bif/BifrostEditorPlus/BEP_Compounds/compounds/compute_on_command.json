@@ -1,0 +1,781 @@
+{
+    "header": {
+        "metadata": [
+            {
+                "metaName": "adskFileFormatVersion",
+                "metaValue": "100L"
+            }
+        ]
+    },
+    "namespaces": [],
+    "types": [],
+    "compounds": [
+        {
+            "name": "BEP::compute_on_command",
+            "uriImported": "file:///compute_on_command.json",
+            "metadata": [
+                {
+                    "metaName": "documentation",
+                    "metaType": "string",
+                    "metaValue": "docs/compute_on_command.md"
+                },
+                {
+                    "metaName": "icon",
+                    "metaType": "string",
+                    "metaValue": "icons/BEP.png"
+                },
+                {
+                    "metaName": "io_nodes",
+                    "metadata": [
+                        {
+                            "metaName": "io_inodes",
+                            "metadata": [
+                                {
+                                    "metaName": "input1",
+                                    "metadata": [
+                                        {
+                                            "metaName": "DisplayMode",
+                                            "metaType": "string",
+                                            "metaValue": "2"
+                                        },
+                                        {
+                                            "metaName": "io_ports",
+                                            "metadata": [
+                                                {
+                                                    "metaName": "input"
+                                                },
+                                                {
+                                                    "metaName": "trigger"
+                                                },
+                                                {
+                                                    "metaName": "pass"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "metaName": "LayoutPos",
+                                            "metaType": "string",
+                                            "metaValue": "-950.355 -75.9046"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "metaName": "io_onodes",
+                            "metadata": [
+                                {
+                                    "metaName": "output",
+                                    "metadata": [
+                                        {
+                                            "metaName": "DisplayMode",
+                                            "metaType": "string",
+                                            "metaValue": "2"
+                                        },
+                                        {
+                                            "metaName": "LayoutPos",
+                                            "metaType": "string",
+                                            "metaValue": "746.623 -210.366"
+                                        },
+                                        {
+                                            "metaName": "io_ports",
+                                            "metadata": [
+                                                {
+                                                    "metaName": "output"
+                                                },
+                                                {
+                                                    "metaName": "trigger_pass"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "metaName": "Compute_script",
+                    "metaType": "string",
+                    "metaValue": "import maya.cmds as mc\nmc.vnnNode(BifrostEditorPlus.currentGraph(), BifrostEditorPlus.currentNode(), spv=['trigger', str(1-int(mc.vnnNode(BifrostEditorPlus.currentGraph(), BifrostEditorPlus.currentNode(), qpv='trigger')))])"
+                },
+                {
+                    "metaName": "scriptButtons",
+                    "metaType": "string",
+                    "metaValue": "Compute"
+                },
+                {
+                    "metaName": "ViewportRect",
+                    "metaType": "string",
+                    "metaValue": "-1438 -360 2877 720"
+                },
+                {
+                    "metaName": "DisplayMode",
+                    "metaType": "string",
+                    "metaValue": "2"
+                },
+                {
+                    "metaName": "LayoutPos",
+                    "metaType": "string",
+                    "metaValue": "-155 -42"
+                },
+                {
+                    "metaName": "UILayout",
+                    "metaType": "string",
+                    "metaValue": "{\n    \"NodeLayout\": {\n        \"hideUndeclaredPorts\": false,\n        \"items\": [\n            {\n                \"port\": \"input\"\n            },\n            {\n                \"expanded\": false,\n                \"group\": \"Settings\",\n                \"items\": [\n                    {\n                        \"port\": \"pass\"\n                    },\n                    {\n                        \"port\": \"trigger\"\n                    }\n                ]\n            }\n        ]\n    }\n}\n"
+                },
+                {
+                    "metaName": "PortExpandedState",
+                    "metadata": [
+                        {
+                            "metaName": "Settings",
+                            "metaType": "string",
+                            "metaValue": "0"
+                        }
+                    ]
+                }
+            ],
+            "ports": [
+                {
+                    "portName": "input",
+                    "portDirection": "input",
+                    "portDefaultType": "float",
+                    "portDefault": "0f"
+                },
+                {
+                    "portName": "output",
+                    "portDirection": "output"
+                },
+                {
+                    "portName": "trigger",
+                    "portDirection": "input",
+                    "portDefaultType": "float",
+                    "portDefault": "0f"
+                },
+                {
+                    "portName": "pass",
+                    "portDirection": "input",
+                    "portType": "bool",
+                    "portDefault": "false"
+                },
+                {
+                    "portName": "trigger_pass",
+                    "portDirection": "output"
+                }
+            ],
+            "compounds": [
+                {
+                    "name": "compound",
+                    "uriImported": "file:///compute_on_command.json",
+                    "metadata": [
+                        {
+                            "metaName": "io_nodes",
+                            "metadata": [
+                                {
+                                    "metaName": "io_inodes",
+                                    "metadata": [
+                                        {
+                                            "metaName": "input",
+                                            "metadata": [
+                                                {
+                                                    "metaName": "DisplayMode",
+                                                    "metaType": "string",
+                                                    "metaValue": "2"
+                                                },
+                                                {
+                                                    "metaName": "io_ports",
+                                                    "metadata": [
+                                                        {
+                                                            "metaName": "trigger"
+                                                        },
+                                                        {
+                                                            "metaName": "trigger_fb"
+                                                        },
+                                                        {
+                                                            "metaName": "pass"
+                                                        },
+                                                        {
+                                                            "metaName": "input"
+                                                        },
+                                                        {
+                                                            "metaName": "output_fb"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "metaName": "LayoutPos",
+                                                    "metaType": "string",
+                                                    "metaValue": "-1247.01 9.6795"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "metaName": "io_onodes",
+                                    "metadata": [
+                                        {
+                                            "metaName": "output",
+                                            "metadata": [
+                                                {
+                                                    "metaName": "DisplayMode",
+                                                    "metaType": "string",
+                                                    "metaValue": "2"
+                                                },
+                                                {
+                                                    "metaName": "LayoutPos",
+                                                    "metaType": "string",
+                                                    "metaValue": "-766.098 -253.742"
+                                                },
+                                                {
+                                                    "metaName": "io_ports",
+                                                    "metadata": [
+                                                        {
+                                                            "metaName": "trigger1"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "metaName": "output1",
+                                            "metadata": [
+                                                {
+                                                    "metaName": "DisplayMode",
+                                                    "metaType": "string",
+                                                    "metaValue": "2"
+                                                },
+                                                {
+                                                    "metaName": "io_ports",
+                                                    "metadata": [
+                                                        {
+                                                            "metaName": "output"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "metaName": "LayoutPos",
+                                                    "metaType": "string",
+                                                    "metaValue": "612.152 7.17"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "metaName": "ViewportRect",
+                            "metaType": "string",
+                            "metaValue": "-1999.37 -521.853 4118.21 1030.63"
+                        }
+                    ],
+                    "ports": [
+                        {
+                            "portName": "trigger",
+                            "portDirection": "input"
+                        },
+                        {
+                            "portName": "trigger_fb",
+                            "portDirection": "input",
+                            "linkedFeedbackPort": "trigger1"
+                        },
+                        {
+                            "portName": "pass",
+                            "portDirection": "input",
+                            "portType": "bool"
+                        },
+                        {
+                            "portName": "input",
+                            "portDirection": "input"
+                        },
+                        {
+                            "portName": "output",
+                            "portDirection": "output"
+                        },
+                        {
+                            "portName": "output_fb",
+                            "portDirection": "input",
+                            "linkedFeedbackPort": "output"
+                        },
+                        {
+                            "portName": "trigger1",
+                            "portDirection": "output"
+                        }
+                    ],
+                    "compoundNodes": [
+                        {
+                            "nodeName": "if",
+                            "nodeType": "Core::Logic::if",
+                            "metadata": [
+                                {
+                                    "metaName": "DisplayMode",
+                                    "metaType": "string",
+                                    "metaValue": "2"
+                                },
+                                {
+                                    "metaName": "LayoutPos",
+                                    "metaType": "string",
+                                    "metaValue": "322.431 7.207"
+                                }
+                            ]
+                        },
+                        {
+                            "nodeName": "not_equal",
+                            "nodeType": "Core::Logic::not_equal",
+                            "metadata": [
+                                {
+                                    "metaName": "DisplayMode",
+                                    "metaType": "string",
+                                    "metaValue": "2"
+                                },
+                                {
+                                    "metaName": "LayoutPos",
+                                    "metaType": "string",
+                                    "metaValue": "-455.945 -150.962"
+                                }
+                            ]
+                        },
+                        {
+                            "nodeName": "or",
+                            "nodeType": "Core::Logic::or",
+                            "metadata": [
+                                {
+                                    "metaName": "DisplayMode",
+                                    "metaType": "string",
+                                    "metaValue": "2"
+                                },
+                                {
+                                    "metaName": "LayoutPos",
+                                    "metaType": "string",
+                                    "metaValue": "-81.418 -78.666"
+                                }
+                            ]
+                        }
+                    ],
+                    "connections": [
+                        {
+                            "source": ".input",
+                            "target": "if.true_case"
+                        },
+                        {
+                            "source": ".output_fb",
+                            "target": "if.false_case"
+                        },
+                        {
+                            "source": "if.output",
+                            "target": ".output"
+                        },
+                        {
+                            "source": ".trigger",
+                            "target": ".trigger1"
+                        },
+                        {
+                            "source": "or.output",
+                            "target": "if.condition"
+                        },
+                        {
+                            "source": "not_equal.output",
+                            "target": "or.first"
+                        },
+                        {
+                            "source": ".pass",
+                            "target": "or.second"
+                        },
+                        {
+                            "source": ".trigger_fb",
+                            "target": "not_equal.second"
+                        },
+                        {
+                            "source": ".trigger",
+                            "target": "not_equal.first"
+                        }
+                    ],
+                    "values": [],
+                    "reservedNodeNames": [
+                        {
+                            "name": "input"
+                        },
+                        {
+                            "name": "output"
+                        },
+                        {
+                            "name": "output1"
+                        }
+                    ]
+                },
+                {
+                    "name": "force_pull_port",
+                    "uriImported": "file:///compute_on_command.json",
+                    "metadata": [
+                        {
+                            "metaName": "icon",
+                            "metaType": "string",
+                            "metaValue": "icons/rebelPack.svg"
+                        },
+                        {
+                            "metaName": "io_nodes",
+                            "metadata": [
+                                {
+                                    "metaName": "io_inodes",
+                                    "metadata": [
+                                        {
+                                            "metaName": "input",
+                                            "metadata": [
+                                                {
+                                                    "metaName": "DisplayMode",
+                                                    "metaType": "string",
+                                                    "metaValue": "2"
+                                                },
+                                                {
+                                                    "metaName": "LayoutPos",
+                                                    "metaType": "string",
+                                                    "metaValue": "10 314"
+                                                },
+                                                {
+                                                    "metaName": "io_ports",
+                                                    "metadata": [
+                                                        {
+                                                            "metaName": "value"
+                                                        },
+                                                        {
+                                                            "metaName": "pull"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "metaName": "io_onodes",
+                                    "metadata": [
+                                        {
+                                            "metaName": "output",
+                                            "metadata": [
+                                                {
+                                                    "metaName": "DisplayMode",
+                                                    "metaType": "string",
+                                                    "metaValue": "2"
+                                                },
+                                                {
+                                                    "metaName": "LayoutPos",
+                                                    "metaType": "string",
+                                                    "metaValue": "1230 145"
+                                                },
+                                                {
+                                                    "metaName": "io_ports",
+                                                    "metadata": [
+                                                        {
+                                                            "metaName": "out_value"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "metaName": "_recentNode_",
+                            "metaType": "string",
+                            "metaValue": "BifrostGraph,Core::Object,set_property"
+                        },
+                        {
+                            "metaName": "_recentNode_",
+                            "metaType": "string",
+                            "metaValue": "BifrostGraph,Core::Graph,pass"
+                        },
+                        {
+                            "metaName": "_recentNode_",
+                            "metaType": "string",
+                            "metaValue": "BifrostGraph,Core::Type_Conversion,to_type_any"
+                        },
+                        {
+                            "metaName": "_recentNode_",
+                            "metaType": "string",
+                            "metaValue": "BifrostBoard,Core::Object,get_property"
+                        },
+                        {
+                            "metaName": "_recentNode_",
+                            "metaType": "string",
+                            "metaValue": "BifrostBoard,Core::Object,set_property"
+                        },
+                        {
+                            "metaName": "ViewportRect",
+                            "metaType": "string",
+                            "metaValue": "-70.0014 -293.59 1605.71 1111.74"
+                        }
+                    ],
+                    "ports": [
+                        {
+                            "portName": "value",
+                            "portDirection": "input"
+                        },
+                        {
+                            "portName": "pull",
+                            "portDirection": "input"
+                        },
+                        {
+                            "portName": "out_value",
+                            "portDirection": "output"
+                        }
+                    ],
+                    "compoundNodes": [
+                        {
+                            "nodeName": "empty_object",
+                            "valueType": "Object",
+                            "metadata": [
+                                {
+                                    "metaName": "DisplayMode",
+                                    "metaType": "string",
+                                    "metaValue": "2"
+                                },
+                                {
+                                    "metaName": "LayoutPos",
+                                    "metaType": "string",
+                                    "metaValue": "315 10"
+                                },
+                                {
+                                    "metaName": "valuenode_defaultvalue"
+                                }
+                            ]
+                        },
+                        {
+                            "nodeName": "get_property",
+                            "nodeType": "Core::Object::get_property",
+                            "metadata": [
+                                {
+                                    "metaName": "DisplayMode",
+                                    "metaType": "string",
+                                    "metaValue": "2"
+                                },
+                                {
+                                    "metaName": "LayoutPos",
+                                    "metaType": "string",
+                                    "metaValue": "925 157"
+                                }
+                            ]
+                        },
+                        {
+                            "nodeName": "pass",
+                            "nodeType": "Core::Graph::pass",
+                            "metadata": [
+                                {
+                                    "metaName": "DisplayMode",
+                                    "metaType": "string",
+                                    "metaValue": "2"
+                                },
+                                {
+                                    "metaName": "LayoutPos",
+                                    "metaType": "string",
+                                    "metaValue": "620 327"
+                                }
+                            ]
+                        },
+                        {
+                            "nodeName": "pass1",
+                            "nodeType": "Core::Graph::pass",
+                            "metadata": [
+                                {
+                                    "metaName": "DisplayMode",
+                                    "metaType": "string",
+                                    "metaValue": "2"
+                                },
+                                {
+                                    "metaName": "LayoutPos",
+                                    "metaType": "string",
+                                    "metaValue": "315 205"
+                                }
+                            ]
+                        },
+                        {
+                            "nodeName": "set_property",
+                            "nodeType": "Core::Object::set_property",
+                            "metadata": [
+                                {
+                                    "metaName": "DisplayMode",
+                                    "metaType": "string",
+                                    "metaValue": "2"
+                                },
+                                {
+                                    "metaName": "LayoutPos",
+                                    "metaType": "string",
+                                    "metaValue": "620 84"
+                                }
+                            ]
+                        }
+                    ],
+                    "connections": [
+                        {
+                            "source": "get_property.value",
+                            "target": ".out_value"
+                        },
+                        {
+                            "source": ".value",
+                            "target": "pass.input"
+                        },
+                        {
+                            "source": "pass.output",
+                            "target": "get_property.default_and_type"
+                        },
+                        {
+                            "source": ".pull",
+                            "target": "pass1.input"
+                        },
+                        {
+                            "source": "empty_object.output",
+                            "target": "set_property.object"
+                        },
+                        {
+                            "source": "set_property.out_object",
+                            "target": "get_property.object"
+                        },
+                        {
+                            "source": "pass1.output",
+                            "target": "set_property.value"
+                        }
+                    ],
+                    "values": [
+                        {
+                            "valueName": "empty_object.value",
+                            "valueType": "Object",
+                            "value": {}
+                        },
+                        {
+                            "valueName": "get_property.default_and_type",
+                            "valueType": "array<Object>",
+                            "value": []
+                        },
+                        {
+                            "valueName": "get_property.key",
+                            "valueType": "string",
+                            "value": "this key won't exist"
+                        },
+                        {
+                            "valueName": "set_property.key",
+                            "valueType": "string",
+                            "value": "dummy"
+                        }
+                    ],
+                    "reservedNodeNames": [
+                        {
+                            "name": "input"
+                        },
+                        {
+                            "name": "output"
+                        }
+                    ]
+                }
+            ],
+            "compoundNodes": [
+                {
+                    "nodeName": "compound",
+                    "nodeType": "compound",
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "-135.706 -256.02"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "force_pull_port",
+                    "nodeType": "force_pull_port",
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "372.377 -263.148"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "pass",
+                    "nodeType": "Core::Graph::pass",
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "-566.272 -392.256"
+                        }
+                    ]
+                }
+            ],
+            "connections": [
+                {
+                    "source": ".input",
+                    "target": "compound.input"
+                },
+                {
+                    "source": "compound.output",
+                    "target": "force_pull_port.value"
+                },
+                {
+                    "source": "force_pull_port.out_value",
+                    "target": ".output"
+                },
+                {
+                    "source": ".input",
+                    "target": "compound.output_fb"
+                },
+                {
+                    "source": ".pass",
+                    "target": "compound.pass"
+                },
+                {
+                    "source": ".trigger",
+                    "target": "pass.input"
+                },
+                {
+                    "source": "pass.output",
+                    "target": "compound.trigger"
+                },
+                {
+                    "source": "pass.output",
+                    "target": "compound.trigger_fb"
+                },
+                {
+                    "source": "pass.output",
+                    "target": ".trigger_pass"
+                },
+                {
+                    "source": "compound.trigger1",
+                    "target": "force_pull_port.pull"
+                }
+            ],
+            "values": [
+                {
+                    "valueName": "compound.pass",
+                    "valueType": "bool",
+                    "value": "false"
+                }
+            ],
+            "reservedNodeNames": [
+                {
+                    "name": "output"
+                },
+                {
+                    "name": "input1"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,27 @@
+{
+    "point_position": {
+        "target": "point_component",
+        "type": "Math::float3",
+        "default": "{0,0,0}"
+    },
+    "point_normal": {
+        "target": "point_component",
+        "type": "Math::float3",
+        "default": "{0, 1, 0}"
+    },
+    "point_velocity": {
+        "target": "point_component",
+        "type": "Math::float3",
+        "default": "{0,0,0}"
+    },
+    "point_color": {
+        "target": "point_component",
+        "type": "Math::float4",
+        "default": "{1,0,0,1}"
+    },
+    "point_size": {
+        "target": "point_component",
+        "type": "float",
+        "default": "1"
+    }
+}

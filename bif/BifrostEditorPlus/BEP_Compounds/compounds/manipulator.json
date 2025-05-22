@@ -1,0 +1,325 @@
+{
+    "header": {
+        "metadata": [
+            {
+                "metaName": "adskFileFormatVersion",
+                "metaValue": "100L"
+            }
+        ]
+    },
+    "namespaces": [],
+    "types": [],
+    "compounds": [
+        {
+            "name": "BEP::manipulator",
+            "metadata": [
+                {
+                    "metaName": "icon",
+                    "metaType": "string",
+                    "metaValue": "icons/BEP.png"
+                },
+                {
+                    "metaName": "ViewportRect",
+                    "metaType": "string",
+                    "metaValue": "-662 -403 1325 806"
+                },
+                {
+                    "metaName": "BEP_manipArgs",
+                    "metaType": "string",
+                    "metaValue": "[{\"m_port\": \"transform_in\", \"style_attrs\": {\"ove\": 1, \"ovrgbf\": 1, \"ovrgb\": [0.1, 0.6, 1.1]}, \"style_attr_ports\": {\"ovrgb\": \"color\", \"shape\": \"shape\", \"wire\": \"wireframe\", \"fill\": \"fill_shape\", \"xray\": \"xray\", \"lineWidth\": \"line_width\", \"size\": \"size\", \"label\": \"label\", \"fillOpacity\": \"fill_opacity\"}}]"
+                },
+                {
+                    "metaName": "UILayout",
+                    "metaType": "string",
+                    "metaValue": "{\n    \"NodeLayout\": {\n        \"hideUndeclaredPorts\": false,\n        \"items\": [\n            {\n                \"expanded\": false,\n                \"group\": \"Settings\",\n                \"items\": [\n                    {\n                        \"port\": \"shape\"\n                    },\n                    {\n                        \"port\": \"size\"\n                    },\n                    {\n                        \"port\": \"color\"\n                    },\n                    {\n                        \"port\": \"wireframe\"\n                    },\n                    {\n                        \"port\": \"fill_shape\"\n                    },\n                    {\n                        \"port\": \"xray\"\n                    },\n                    {\n                        \"port\": \"line_width\"\n                    },\n                    {\n                        \"port\": \"fill_opacity\"\n                    },\n                    {\n                        \"port\": \"fill_shape F\"\n                    },\n                    {\n                        \"port\": \"label\"\n                    },\n                    {\n                        \"port\": \"transform_in\"\n                    }\n                ]\n            }\n        ]\n    }\n}\n"
+                },
+                {
+                    "metaName": "PortExpandedState",
+                    "metadata": [
+                        {
+                            "metaName": "Settings",
+                            "metaType": "string",
+                            "metaValue": "0"
+                        }
+                    ]
+                },
+                {
+                    "metaName": "io_nodes",
+                    "metadata": [
+                        {
+                            "metaName": "io_inodes",
+                            "metadata": [
+                                {
+                                    "metaName": "input",
+                                    "metadata": [
+                                        {
+                                            "metaName": "DisplayMode",
+                                            "metaType": "string",
+                                            "metaValue": "2"
+                                        },
+                                        {
+                                            "metaName": "LayoutPos",
+                                            "metaType": "string",
+                                            "metaValue": "-255.5 -66"
+                                        },
+                                        {
+                                            "metaName": "io_ports",
+                                            "metadata": [
+                                                {
+                                                    "metaName": "transform_in"
+                                                },
+                                                {
+                                                    "metaName": "shape"
+                                                },
+                                                {
+                                                    "metaName": "color"
+                                                },
+                                                {
+                                                    "metaName": "wireframe"
+                                                },
+                                                {
+                                                    "metaName": "fill_shape"
+                                                },
+                                                {
+                                                    "metaName": "xray"
+                                                },
+                                                {
+                                                    "metaName": "line_width"
+                                                },
+                                                {
+                                                    "metaName": "size"
+                                                },
+                                                {
+                                                    "metaName": "label"
+                                                },
+                                                {
+                                                    "metaName": "fill_opacity"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "metaName": "io_onodes",
+                            "metadata": [
+                                {
+                                    "metaName": "output",
+                                    "metadata": [
+                                        {
+                                            "metaName": "DisplayMode",
+                                            "metaType": "string",
+                                            "metaValue": "2"
+                                        },
+                                        {
+                                            "metaName": "LayoutPos",
+                                            "metaType": "string",
+                                            "metaValue": "309.5 -86"
+                                        },
+                                        {
+                                            "metaName": "io_ports",
+                                            "metadata": [
+                                                {
+                                                    "metaName": "transform"
+                                                },
+                                                {
+                                                    "metaName": "translate"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "metaName": "DisplayMode",
+                    "metaType": "string",
+                    "metaValue": "2"
+                },
+                {
+                    "metaName": "LayoutPos",
+                    "metaType": "string",
+                    "metaValue": "-239.058 205.364"
+                }
+            ],
+            "ports": [
+                {
+                    "portName": "transform_in",
+                    "portDirection": "input",
+                    "portType": "Math::float4x4",
+                    "portDefault": {
+                        "c0": {
+                            "x": "1f",
+                            "y": "0f",
+                            "z": "0f",
+                            "w": "0f"
+                        },
+                        "c1": {
+                            "x": "0f",
+                            "y": "1f",
+                            "z": "0f",
+                            "w": "0f"
+                        },
+                        "c2": {
+                            "x": "0f",
+                            "y": "0f",
+                            "z": "1f",
+                            "w": "0f"
+                        },
+                        "c3": {
+                            "x": "0f",
+                            "y": "0f",
+                            "z": "0f",
+                            "w": "1f"
+                        }
+                    }
+                },
+                {
+                    "portName": "transform",
+                    "portDirection": "output",
+                    "portType": "Math::float4x4"
+                },
+                {
+                    "portName": "translate",
+                    "portDirection": "output",
+                    "portType": "Math::float3"
+                },
+                {
+                    "portName": "shape",
+                    "portDirection": "input",
+                    "portType": "uint",
+                    "portDefault": "4U",
+                    "metadata": [
+                        {
+                            "metaName": "UIWidget",
+                            "metaType": "string",
+                            "metaValue": "ComboBox"
+                        },
+                        {
+                            "metaName": "UIWidgetProp",
+                            "metaType": "string",
+                            "metaValue": "editable=false;items={Box=0;Sphere=1;\"Sphere High\"=2;Point=3;Cross=4;\"Arrow Dynamic\"=5;\"Arrow X\"=6;\"Arrow Y\"=7;\"Arrow Z\"=8}"
+                        }
+                    ]
+                },
+                {
+                    "portName": "color",
+                    "portDirection": "input",
+                    "portType": "Math::float3",
+                    "portDefault": {
+                        "x": "1f",
+                        "y": "0.100000001f",
+                        "z": "0.100000001f"
+                    },
+                    "metadata": [
+                        {
+                            "metaName": "UIWidget",
+                            "metaType": "string",
+                            "metaValue": "ColorPicker"
+                        }
+                    ]
+                },
+                {
+                    "portName": "wireframe",
+                    "portDirection": "input",
+                    "portType": "bool",
+                    "portDefault": "true"
+                },
+                {
+                    "portName": "fill_shape",
+                    "portDirection": "input",
+                    "portType": "bool",
+                    "portDefault": "true"
+                },
+                {
+                    "portName": "xray",
+                    "portDirection": "input",
+                    "portType": "bool",
+                    "portDefault": "true"
+                },
+                {
+                    "portName": "line_width",
+                    "portDirection": "input",
+                    "portType": "float",
+                    "portDefault": "1f",
+                    "metadata": [
+                        {
+                            "metaName": "UiSoftMin",
+                            "metaType": "string",
+                            "metaValue": "0"
+                        }
+                    ]
+                },
+                {
+                    "portName": "size",
+                    "portDirection": "input",
+                    "portType": "float",
+                    "portDefault": "1f",
+                    "metadata": [
+                        {
+                            "metaName": "UiSoftMin",
+                            "metaType": "string",
+                            "metaValue": "0"
+                        }
+                    ]
+                },
+                {
+                    "portName": "label",
+                    "portDirection": "input",
+                    "portType": "string",
+                    "portDefault": ""
+                },
+                {
+                    "portName": "fill_opacity",
+                    "portDirection": "input",
+                    "portType": "float",
+                    "portDefault": "0.200000003f"
+                }
+            ],
+            "compoundNodes": [
+                {
+                    "nodeName": "matrix_to_SRT",
+                    "nodeType": "Core::Math::matrix_to_SRT",
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "8 6"
+                        }
+                    ]
+                }
+            ],
+            "connections": [
+                {
+                    "source": "matrix_to_SRT.translation",
+                    "target": ".translate"
+                },
+                {
+                    "source": ".transform_in",
+                    "target": ".transform"
+                },
+                {
+                    "source": ".transform_in",
+                    "target": "matrix_to_SRT.transform"
+                }
+            ],
+            "values": [],
+            "reservedNodeNames": [
+                {
+                    "name": "input"
+                },
+                {
+                    "name": "output"
+                }
+            ]
+        }
+    ]
+}
