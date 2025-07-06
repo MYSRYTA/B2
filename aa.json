@@ -1,0 +1,1031 @@
+{
+    "header": {
+        "metadata": [
+            {
+                "metaName": "adskFileFormatVersion",
+                "metaValue": "100L"
+            }
+        ]
+    },
+    "namespaces": [],
+    "types": [],
+    "compounds": [
+        {
+            "name": "User::Compounds::compound",
+            "metadata": [
+                {
+                    "metaName": "backdrop",
+                    "metadata": [
+                        {
+                            "metaName": "type",
+                            "metaType": "string",
+                            "metaValue": "backdrop"
+                        },
+                        {
+                            "metaName": "title",
+                            "metaType": "string",
+                            "metaValue": "INput curve A with tangents"
+                        },
+                        {
+                            "metaName": "coords",
+                            "metaType": "string",
+                            "metaValue": "-1659.84 -2775.62 1248.73 465.854"
+                        }
+                    ]
+                },
+                {
+                    "metaName": "backdrop1",
+                    "metadata": [
+                        {
+                            "metaName": "type",
+                            "metaType": "string",
+                            "metaValue": "backdrop"
+                        },
+                        {
+                            "metaName": "title",
+                            "metaType": "string",
+                            "metaValue": "Input curve B with tangents"
+                        },
+                        {
+                            "metaName": "coords",
+                            "metaType": "string",
+                            "metaValue": "-1795.79 -2181.25 1386 510"
+                        }
+                    ]
+                },
+                {
+                    "metaName": "io_nodes",
+                    "metadata": [
+                        {
+                            "metaName": "io_inodes",
+                            "metadata": [
+                                {
+                                    "metaName": "input",
+                                    "metadata": [
+                                        {
+                                            "metaName": "io_ports",
+                                            "metadata": [
+                                                {
+                                                    "metaName": "strands2"
+                                                },
+                                                {
+                                                    "metaName": "strands1"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "metaName": "DisplayMode",
+                                            "metaType": "string",
+                                            "metaValue": "2"
+                                        },
+                                        {
+                                            "metaName": "zValue",
+                                            "metaType": "string",
+                                            "metaValue": "49.000000"
+                                        },
+                                        {
+                                            "metaName": "LayoutPos",
+                                            "metaType": "string",
+                                            "metaValue": "-1877.22 -2323.23"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "metaName": "io_onodes",
+                            "metadata": [
+                                {
+                                    "metaName": "output",
+                                    "metadata": [
+                                        {
+                                            "metaName": "io_ports",
+                                            "metadata": [
+                                                {
+                                                    "metaName": "output"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "metaName": "DisplayMode",
+                                            "metaType": "string",
+                                            "metaValue": "2"
+                                        },
+                                        {
+                                            "metaName": "LayoutPos",
+                                            "metaType": "string",
+                                            "metaValue": "225.5 -60.5"
+                                        },
+                                        {
+                                            "metaName": "zValue",
+                                            "metaType": "string",
+                                            "metaValue": "32.000000"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "metaName": "ViewportRect",
+                    "metaType": "string",
+                    "metaValue": "-523.486 -3112.64 1900.95 2309.07"
+                },
+                {
+                    "metaName": "LayoutPos",
+                    "metaType": "string",
+                    "metaValue": "-343.153 -2265.24"
+                },
+                {
+                    "metaName": "DisplayMode",
+                    "metaType": "string",
+                    "metaValue": "2"
+                },
+                {
+                    "metaName": "zValue",
+                    "metaType": "string",
+                    "metaValue": "80.000000"
+                }
+            ],
+            "ports": [
+                {
+                    "portName": "output",
+                    "portDirection": "output"
+                },
+                {
+                    "portName": "strands2",
+                    "portDirection": "input",
+                    "portType": "Object",
+                    "portDefault": {}
+                },
+                {
+                    "portName": "strands1",
+                    "portDirection": "input",
+                    "portType": "Object",
+                    "portDefault": {}
+                }
+            ],
+            "compoundNodes": [
+                {
+                    "nodeName": "add1",
+                    "nodeType": "Core::Math::add",
+                    "multiInPortNames": [
+                        "output1",
+                        "output2"
+                    ],
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "716.223 -2288.31"
+                        },
+                        {
+                            "metaName": "zValue",
+                            "metaType": "string",
+                            "metaValue": "39.000000"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "curveB_direction",
+                    "nodeType": "Core::Fields::voxel_field",
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "166.501 -2054"
+                        },
+                        {
+                            "metaName": "zValue",
+                            "metaType": "string",
+                            "metaValue": "46.000000"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "curveB_signed_distance",
+                    "nodeType": "Core::Fields::voxel_field",
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "-247.999 -1752.13"
+                        },
+                        {
+                            "metaName": "zValue",
+                            "metaType": "string",
+                            "metaValue": "43.000000"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "curve_A_direction",
+                    "nodeType": "Core::Fields::voxel_field",
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "171.781 -2687.17"
+                        },
+                        {
+                            "metaName": "zValue",
+                            "metaType": "string",
+                            "metaValue": "47.000000"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "curve_A_signed_distance",
+                    "nodeType": "Core::Fields::voxel_field",
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "-283.521 -2455.83"
+                        },
+                        {
+                            "metaName": "zValue",
+                            "metaType": "string",
+                            "metaValue": "48.000000"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "fcurve_field",
+                    "nodeType": "Core::Fields::fcurve_field",
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "169.559 -2403.16"
+                        },
+                        {
+                            "metaName": "zValue",
+                            "metaType": "string",
+                            "metaValue": "41.000000"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "fcurve_field1",
+                    "nodeType": "Core::Fields::fcurve_field",
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "171.623 -1790.8"
+                        },
+                        {
+                            "metaName": "zValue",
+                            "metaType": "string",
+                            "metaValue": "42.000000"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "get_geo_property1",
+                    "nodeType": "Geometry::Properties::get_geo_property",
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "-1424 -2590.36"
+                        },
+                        {
+                            "metaName": "zValue",
+                            "metaType": "string",
+                            "metaValue": "33.000000"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "get_geo_property2",
+                    "nodeType": "Geometry::Properties::get_geo_property",
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "-1500.79 -1952.25"
+                        },
+                        {
+                            "metaName": "zValue",
+                            "metaType": "string",
+                            "metaValue": "34.000000"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "multiply2",
+                    "nodeType": "Core::Math::multiply",
+                    "multiInPortNames": [
+                        "voxel_field",
+                        "voxel_field1"
+                    ],
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "436.309 -2575.02"
+                        },
+                        {
+                            "metaName": "zValue",
+                            "metaType": "string",
+                            "metaValue": "38.000000"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "multiply3",
+                    "nodeType": "Core::Math::multiply",
+                    "multiInPortNames": [
+                        "voxel_field",
+                        "voxel_field1"
+                    ],
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "460.923 -2005.43"
+                        },
+                        {
+                            "metaName": "zValue",
+                            "metaType": "string",
+                            "metaValue": "37.000000"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "points_to_volume1",
+                    "nodeType": "Geometry::Converters::points_to_volume",
+                    "fanInPortNames": {
+                        "base_resolution": [],
+                        "half_resolution": [],
+                        "quarter_resolution": [],
+                        "eighth_resolution": []
+                    },
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "-911 -2686.36"
+                        },
+                        {
+                            "metaName": "PortExpandedState",
+                            "metadata": [
+                                {
+                                    "metaName": "base_resolution",
+                                    "metaType": "string",
+                                    "metaValue": "1"
+                                },
+                                {
+                                    "metaName": "half_resolution",
+                                    "metaType": "string",
+                                    "metaValue": "1"
+                                }
+                            ]
+                        },
+                        {
+                            "metaName": "zValue",
+                            "metaType": "string",
+                            "metaValue": "44.000000"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "points_to_volume2",
+                    "nodeType": "Geometry::Converters::points_to_volume",
+                    "fanInPortNames": {
+                        "base_resolution": [],
+                        "half_resolution": [],
+                        "quarter_resolution": [],
+                        "eighth_resolution": []
+                    },
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "-925.794 -2077.25"
+                        },
+                        {
+                            "metaName": "PortExpandedState",
+                            "metadata": [
+                                {
+                                    "metaName": "base_resolution",
+                                    "metaType": "string",
+                                    "metaValue": "1"
+                                },
+                                {
+                                    "metaName": "half_resolution",
+                                    "metaType": "string",
+                                    "metaValue": "1"
+                                }
+                            ]
+                        },
+                        {
+                            "metaName": "zValue",
+                            "metaType": "string",
+                            "metaValue": "45.000000"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "set_geo_property1",
+                    "nodeType": "Geometry::Properties::set_geo_property",
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "-1164 -2684.36"
+                        },
+                        {
+                            "metaName": "zValue",
+                            "metaType": "string",
+                            "metaValue": "36.000000"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "set_geo_property2",
+                    "nodeType": "Geometry::Properties::set_geo_property",
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "-1197.79 -2050.25"
+                        },
+                        {
+                            "metaName": "zValue",
+                            "metaType": "string",
+                            "metaValue": "35.000000"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "value",
+                    "valueType": "Math::FCurve",
+                    "metadata": [
+                        {
+                            "metaName": "DisplayMode",
+                            "metaType": "string",
+                            "metaValue": "2"
+                        },
+                        {
+                            "metaName": "LayoutPos",
+                            "metaType": "string",
+                            "metaValue": "-128.475 -2191.14"
+                        },
+                        {
+                            "metaName": "zValue",
+                            "metaType": "string",
+                            "metaValue": "40.000000"
+                        }
+                    ]
+                }
+            ],
+            "connections": [
+                {
+                    "source": "multiply3.output",
+                    "target": "add1.first.output1"
+                },
+                {
+                    "source": "multiply2.output",
+                    "target": "add1.first.output2"
+                },
+                {
+                    "source": "add1.output",
+                    "target": ".output"
+                },
+                {
+                    "source": "points_to_volume2.volume",
+                    "target": "curveB_direction.volume"
+                },
+                {
+                    "source": "curveB_direction.voxel_field",
+                    "target": "multiply3.first.voxel_field"
+                },
+                {
+                    "source": "points_to_volume2.volume",
+                    "target": "curveB_signed_distance.volume"
+                },
+                {
+                    "source": "curveB_signed_distance.voxel_field",
+                    "target": "fcurve_field1.field"
+                },
+                {
+                    "source": "points_to_volume1.volume",
+                    "target": "curve_A_direction.volume"
+                },
+                {
+                    "source": "curve_A_direction.voxel_field",
+                    "target": "multiply2.first.voxel_field"
+                },
+                {
+                    "source": "points_to_volume1.volume",
+                    "target": "curve_A_signed_distance.volume"
+                },
+                {
+                    "source": "curve_A_signed_distance.voxel_field",
+                    "target": "fcurve_field.field"
+                },
+                {
+                    "source": "value.output",
+                    "target": "fcurve_field.fcurve"
+                },
+                {
+                    "source": "fcurve_field.out_field",
+                    "target": "multiply2.first.voxel_field1"
+                },
+                {
+                    "source": "value.output",
+                    "target": "fcurve_field1.fcurve"
+                },
+                {
+                    "source": "fcurve_field1.out_field",
+                    "target": "multiply3.first.voxel_field1"
+                },
+                {
+                    "source": ".strands2",
+                    "target": "get_geo_property1.geometry"
+                },
+                {
+                    "source": "get_geo_property1.data",
+                    "target": "set_geo_property1.data"
+                },
+                {
+                    "source": ".strands1",
+                    "target": "get_geo_property2.geometry"
+                },
+                {
+                    "source": "get_geo_property2.data",
+                    "target": "set_geo_property2.data"
+                },
+                {
+                    "source": "set_geo_property1.out_geometry",
+                    "target": "points_to_volume1.points"
+                },
+                {
+                    "source": "set_geo_property2.out_geometry",
+                    "target": "points_to_volume2.points"
+                },
+                {
+                    "source": ".strands2",
+                    "target": "set_geo_property1.geometry"
+                },
+                {
+                    "source": ".strands1",
+                    "target": "set_geo_property2.geometry"
+                }
+            ],
+            "values": [
+                {
+                    "valueName": "curveB_direction.property",
+                    "valueType": "string",
+                    "value": "voxel_vel"
+                },
+                {
+                    "valueName": "curveB_direction.interpolation",
+                    "valueType": "Geometry::Query::SamplerType",
+                    "value": "kLinear"
+                },
+                {
+                    "valueName": "curveB_direction.field_type",
+                    "valueType": "Core::Fields::VectorField",
+                    "value": {}
+                },
+                {
+                    "valueName": "curveB_signed_distance.property",
+                    "valueType": "string",
+                    "value": "voxel_signed_distance"
+                },
+                {
+                    "valueName": "curveB_signed_distance.interpolation",
+                    "valueType": "Geometry::Query::SamplerType",
+                    "value": "kLinear"
+                },
+                {
+                    "valueName": "curve_A_direction.property",
+                    "valueType": "string",
+                    "value": "voxel_vel"
+                },
+                {
+                    "valueName": "curve_A_direction.interpolation",
+                    "valueType": "Geometry::Query::SamplerType",
+                    "value": "kLinear"
+                },
+                {
+                    "valueName": "curve_A_direction.field_type",
+                    "valueType": "Core::Fields::VectorField",
+                    "value": {}
+                },
+                {
+                    "valueName": "curve_A_signed_distance.property",
+                    "valueType": "string",
+                    "value": "voxel_signed_distance"
+                },
+                {
+                    "valueName": "curve_A_signed_distance.interpolation",
+                    "valueType": "Geometry::Query::SamplerType",
+                    "value": "kLinear"
+                },
+                {
+                    "valueName": "fcurve_field.fcurve",
+                    "valueType": "Math::FCurve",
+                    "value": {
+                        "version": "1",
+                        "preExtrapolation": "0",
+                        "postExtrapolation": "0",
+                        "points": [
+                            {
+                                "point": {
+                                    "locked": "1",
+                                    "interpolation": "2",
+                                    "pcn": {
+                                        "xp": "-0.40000000000000002",
+                                        "yp": "1",
+                                        "x": "0",
+                                        "y": "1",
+                                        "xn": "0.40000000000000002",
+                                        "yn": "1"
+                                    }
+                                }
+                            },
+                            {
+                                "point": {
+                                    "locked": "1",
+                                    "interpolation": "2",
+                                    "pcn": {
+                                        "xp": "9.5999999999999996",
+                                        "yp": "0",
+                                        "x": "10",
+                                        "y": "0",
+                                        "xn": "10.4",
+                                        "yn": "0"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "valueName": "get_geo_property1.property",
+                    "valueType": "string",
+                    "value": "point_tangent"
+                },
+                {
+                    "valueName": "get_geo_property1.type",
+                    "valueType": "array<Math::float3>",
+                    "value": []
+                },
+                {
+                    "valueName": "get_geo_property2.property",
+                    "valueType": "string",
+                    "value": "point_tangent"
+                },
+                {
+                    "valueName": "get_geo_property2.type",
+                    "valueType": "array<Math::float3>",
+                    "value": []
+                },
+                {
+                    "valueName": "points_to_volume1.offset",
+                    "valueType": "float",
+                    "value": "0f"
+                },
+                {
+                    "valueName": "points_to_volume1.store_level_set",
+                    "valueType": "bool",
+                    "value": "true"
+                },
+                {
+                    "valueName": "points_to_volume1.store_fog_density",
+                    "valueType": "bool",
+                    "value": "false"
+                },
+                {
+                    "valueName": "points_to_volume1.fog_density",
+                    "valueType": "float",
+                    "value": "1f"
+                },
+                {
+                    "valueName": "points_to_volume1.properties",
+                    "valueType": "string",
+                    "value": "* !point_position point_normal"
+                },
+                {
+                    "valueName": "points_to_volume1.resolution_mode",
+                    "valueType": "Geometry::Volume::ResolutionType",
+                    "value": "Absolute"
+                },
+                {
+                    "valueName": "points_to_volume1.detail_size",
+                    "valueType": "float",
+                    "value": "2f"
+                },
+                {
+                    "valueName": "points_to_volume1.adaptivity",
+                    "valueType": "Geometry::Volume::Adaptivity",
+                    "value": "Off"
+                },
+                {
+                    "valueName": "points_to_volume1.adaptivity_property",
+                    "valueType": "string",
+                    "value": ""
+                },
+                {
+                    "valueName": "points_to_volume1.max_relative_error",
+                    "valueType": "float",
+                    "value": "0.00499999989f"
+                },
+                {
+                    "valueName": "points_to_volume1.enable_resolution_bounds",
+                    "valueType": "bool",
+                    "value": "false"
+                },
+                {
+                    "valueName": "points_to_volume1.enable_bandwidth",
+                    "valueType": "bool",
+                    "value": "false"
+                },
+                {
+                    "valueName": "points_to_volume1.bandwidth",
+                    "valueType": "float",
+                    "value": "0f"
+                },
+                {
+                    "valueName": "points_to_volume1.volume_subdivision_structure",
+                    "valueType": "Geometry::Volume::AutoSubdivisionStructure",
+                    "value": "Automatic"
+                },
+                {
+                    "valueName": "points_to_volume1.base_resolution",
+                    "valueType": "array<Object>",
+                    "value": []
+                },
+                {
+                    "valueName": "points_to_volume1.half_resolution",
+                    "valueType": "array<Object>",
+                    "value": []
+                },
+                {
+                    "valueName": "points_to_volume1.quarter_resolution",
+                    "valueType": "array<Object>",
+                    "value": []
+                },
+                {
+                    "valueName": "points_to_volume1.eighth_resolution",
+                    "valueType": "array<Object>",
+                    "value": []
+                },
+                {
+                    "valueName": "points_to_volume2.offset",
+                    "valueType": "float",
+                    "value": "0f"
+                },
+                {
+                    "valueName": "points_to_volume2.store_level_set",
+                    "valueType": "bool",
+                    "value": "true"
+                },
+                {
+                    "valueName": "points_to_volume2.store_fog_density",
+                    "valueType": "bool",
+                    "value": "false"
+                },
+                {
+                    "valueName": "points_to_volume2.fog_density",
+                    "valueType": "float",
+                    "value": "1f"
+                },
+                {
+                    "valueName": "points_to_volume2.properties",
+                    "valueType": "string",
+                    "value": "* !point_position point_normal"
+                },
+                {
+                    "valueName": "points_to_volume2.resolution_mode",
+                    "valueType": "Geometry::Volume::ResolutionType",
+                    "value": "Absolute"
+                },
+                {
+                    "valueName": "points_to_volume2.detail_size",
+                    "valueType": "float",
+                    "value": "2f"
+                },
+                {
+                    "valueName": "points_to_volume2.adaptivity",
+                    "valueType": "Geometry::Volume::Adaptivity",
+                    "value": "Off"
+                },
+                {
+                    "valueName": "points_to_volume2.adaptivity_property",
+                    "valueType": "string",
+                    "value": ""
+                },
+                {
+                    "valueName": "points_to_volume2.max_relative_error",
+                    "valueType": "float",
+                    "value": "0.00499999989f"
+                },
+                {
+                    "valueName": "points_to_volume2.enable_resolution_bounds",
+                    "valueType": "bool",
+                    "value": "false"
+                },
+                {
+                    "valueName": "points_to_volume2.enable_bandwidth",
+                    "valueType": "bool",
+                    "value": "false"
+                },
+                {
+                    "valueName": "points_to_volume2.bandwidth",
+                    "valueType": "float",
+                    "value": "0f"
+                },
+                {
+                    "valueName": "points_to_volume2.volume_subdivision_structure",
+                    "valueType": "Geometry::Volume::AutoSubdivisionStructure",
+                    "value": "Automatic"
+                },
+                {
+                    "valueName": "points_to_volume2.base_resolution",
+                    "valueType": "array<Object>",
+                    "value": []
+                },
+                {
+                    "valueName": "points_to_volume2.half_resolution",
+                    "valueType": "array<Object>",
+                    "value": []
+                },
+                {
+                    "valueName": "points_to_volume2.quarter_resolution",
+                    "valueType": "array<Object>",
+                    "value": []
+                },
+                {
+                    "valueName": "points_to_volume2.eighth_resolution",
+                    "valueType": "array<Object>",
+                    "value": []
+                },
+                {
+                    "valueName": "set_geo_property1.property",
+                    "valueType": "string",
+                    "value": "vel"
+                },
+                {
+                    "valueName": "set_geo_property1.target",
+                    "valueType": "string",
+                    "value": "point_component"
+                },
+                {
+                    "valueName": "set_geo_property1.interpolation_mode",
+                    "valueType": "Geometry::Common::DataInterpolationMode",
+                    "value": "Linear"
+                },
+                {
+                    "valueName": "set_geo_property2.property",
+                    "valueType": "string",
+                    "value": "vel"
+                },
+                {
+                    "valueName": "set_geo_property2.target",
+                    "valueType": "string",
+                    "value": "point_component"
+                },
+                {
+                    "valueName": "set_geo_property2.interpolation_mode",
+                    "valueType": "Geometry::Common::DataInterpolationMode",
+                    "value": "Linear"
+                },
+                {
+                    "valueName": "value.value",
+                    "valueType": "Math::FCurve",
+                    "value": {
+                        "version": "1",
+                        "preExtrapolation": "0",
+                        "postExtrapolation": "0",
+                        "points": [
+                            {
+                                "point": {
+                                    "locked": "1",
+                                    "interpolation": "2",
+                                    "pcn": {
+                                        "xp": "-0.40000000000000002",
+                                        "yp": "1",
+                                        "x": "0",
+                                        "y": "1",
+                                        "xn": "0.40000000000000002",
+                                        "yn": "1"
+                                    }
+                                }
+                            },
+                            {
+                                "point": {
+                                    "locked": "1",
+                                    "interpolation": "2",
+                                    "pcn": {
+                                        "xp": "9.5999999999999996",
+                                        "yp": "0",
+                                        "x": "10",
+                                        "y": "0",
+                                        "xn": "10.4",
+                                        "yn": "0"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            ],
+            "reservedNodeNames": [
+                {
+                    "name": "input"
+                },
+                {
+                    "name": "output"
+                }
+            ],
+            "libraryDependencies": {
+                "Amino": "2.15.0.4",
+                "bif": "2.15.0.4",
+                "fields": "2.15.0.4",
+                "geometries": "2.15.0.4"
+            }
+        }
+    ]
+}
