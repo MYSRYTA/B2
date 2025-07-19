@@ -72,3 +72,34 @@ def cc(self):
     with winreg.CreateKeyEx(winreg.HKEY_CURRENT_USER, path) as key:
         winreg.SetValueEx(key, 'name1', 0, winreg.REG_SZ, '{"data":987654321}')
         print('データを書き込み')
+        
+#############################################################################################       
+def dot(u, v):
+    return sum(ui * vi for ui, vi in zip(u, v))
+
+def subtract(a, b):
+    return [ai - bi for ai, bi in zip(a, b)]
+
+def to_local_coordinates(vec, base_a, base_b, base_c):
+    # 基底ベクトル
+    v1 = subtract(base_b, base_a)
+    v2 = subtract(base_c, base_a)
+    rel_vec = subtract(vec, base_a)
+
+    # 行列 [v1 v2] の逆行列を使って rel_vec を展開する
+    # 2x2 の線形連立方程式を解く
+
+    a11, a12 = v1[0], v2[0]
+    a21, a22 = v1[1], v2[1]
+
+    b1, b2 = rel_vec[0], rel_vec[1]
+
+    # 逆行列を使って解く（クラメルの公式）
+    det = a11 * a22 - a12 * a21
+    if det == 0:
+        raise ValueError("三角形の辺が平行で線形独立でないため、解けません")
+
+    u = (b1 * a22 - b2 * a12) / det
+    v = (a11 * b2 - a21 * b1) / det
+
+    return [u, v]
